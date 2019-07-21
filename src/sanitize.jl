@@ -65,23 +65,34 @@ function _is_iterable(::Type{T})::Bool where T
     return hasmethod(iterate, (T,))
 end
 
-function _sanitize_indexable!(x::T)::Nothing where T
+function _sanitize_indexable(x::T)::Nothing where T
+    if _has_isassigned(T)
+        _sanitize_indexable_with_check_assigned!(x)
+    else
+        _sanitize_indexable_without_check_assigned!(x)
+    end
+    return nothing
+end
+
+_has_isassigned(::Type{T})::Bool = hasmethod(isassigned, (T, Int,))
+
+function _sanitize_indexable_with_check_assigned!(x::T)::Nothing where T
     if _is_indexable(T)
-        n = try
-            length(x)
-        catch ex
-            # showerror(stderr, ex)
-            # Base.show_backtrace(stderr, catch_backtrace())
-            @debug("Ignoring exception", exception=(ex, catch_backtrace()))
-            0
-        end
-        for i = 1:n
-            if hasmethod(isassigned, (T, Int,))
-                if isassigned(x, i)
-                    sanitize!(x[i])
-                end
-            else
+        for i = 1:length(x)
+            if isassigned(x, i)
                 sanitize!(x[i])
+            end
+        end
+    end
+    return nothing
+end
+
+function _sanitize_indexable_without_check_assigned!(x::T)::Nothing where T
+    if _is_indexable(T)
+        for i = 1:length(x)
+            try
+                sanitize!(x[i])
+            catch
             end
         end
     end
@@ -97,5 +108,5 @@ function _is_indexable(::Type{T})::Bool where T <: Char
 end
 
 function _is_indexable(::Type{T})::Bool where T
-    return true
+    return hasmethod(length, (T,))
 end
