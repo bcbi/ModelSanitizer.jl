@@ -4,11 +4,11 @@ using Test
 @testset "PredictMDSanitizer.jl" begin
     @testset "Unit tests" begin
         @debug("Running unit tests...")
-        @testset "unit-tests/test-sanitize.jl" begin
-            include("unit-tests/test-sanitize.jl")
-        end
         @testset "unit-tests/test-dataframes.jl" begin
             include("unit-tests/test-dataframes.jl")
+        end
+        @testset "unit-tests/test-sanitize.jl" begin
+            include("unit-tests/test-sanitize.jl")
         end
     end
     @testset "Integration tests" begin
