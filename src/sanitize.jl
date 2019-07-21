@@ -74,7 +74,9 @@ function _sanitize_indexable(x::T)::Nothing where T
     return nothing
 end
 
-_has_isassigned(::Type{T})::Bool = hasmethod(isassigned, (T, Int,))
+function _has_isassigned(::Type{T})::Bool where T
+    hasmethod(isassigned, (T, Int,))
+end
 
 function _sanitize_indexable_with_check_assigned!(x::T)::Nothing where T
     if _is_indexable(T)
