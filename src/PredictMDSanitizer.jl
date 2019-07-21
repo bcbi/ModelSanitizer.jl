@@ -1,6 +1,6 @@
 module PredictMDSanitizer
 
-import Requires
+include("../ext/Requires/src/Requires.jl")
 
 include("sanitize.jl")
 
