@@ -65,7 +65,7 @@ function _is_iterable(::Type{T})::Bool where T
     return hasmethod(iterate, (T,))
 end
 
-function _sanitize_indexable(x::T)::Nothing where T
+function _sanitize_indexable!(x::T)::Nothing where T
     if _has_isassigned(T)
         _sanitize_indexable_with_check_assigned!(x)
     else
