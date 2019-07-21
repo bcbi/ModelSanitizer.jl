@@ -76,7 +76,11 @@ function _sanitize_indexable!(x::T)::Nothing where T
             0
         end
         for i = 1:n
-            if isassigned(x, i)
+            if hasmethod(isassigned, (T, Int,))
+                if isassigned(x, i)
+                    sanitize!(x[i])
+                end
+            else
                 sanitize!(x[i])
             end
         end
