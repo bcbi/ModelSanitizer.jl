@@ -2,5 +2,10 @@ using PredictMDSanitizer
 using Test
 
 @testset "PredictMDSanitizer.jl" begin
-    # Write your own tests here.
+    @testset "test-proof-of-concept-dataframes.jl" begin
+        include("test-proof-of-concept-dataframes.jl")
+    end
+    @testset "test-proof-of-concept-mlj.jl" begin
+        include("test-proof-of-concept-mlj.jl")
+    end
 end
