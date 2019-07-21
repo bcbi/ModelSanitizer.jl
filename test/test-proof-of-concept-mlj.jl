@@ -43,10 +43,13 @@ mach = MLJ.machine(wrapped_model, boston_task)
 
 MLJ.fit!(mach; rows = :)
 
-Test.@test mach.fitresult.sources[1].data[1:10, :Crim] ≈ [0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985,  0.08829, 0.14455, 0.21124, 0.17004]
+Test.@test mach.fitresult.nodes[1].data[1:10, :Crim] ≈ [0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985,  0.08829, 0.14455, 0.21124, 0.17004]
+Test.@test mach.fitresult.nodes[3].data[1:10] ≈ [24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9]
 
-Test.@test size(mach.fitresult.sources[1].data) == (506, 12)
+Test.@test size(mach.fitresult.nodes[1].data) == (506, 12)
+Test.@test size(mach.fitresult.nodes[3].data) == (506,)
 
-PredictMDSanitizer.sanitize!(mach.fitresult)
+# PredictMDSanitizer.sanitize!(mach.fitresult)
 
-Test.@test size(mach.fitresult.sources[1].data) == (0, 0)
+Test.@test size(mach.fitresult.nodes[1].data) == (0, 0)
+Test.@test size(mach.fitresult.nodes[3].data) == (0,)

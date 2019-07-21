@@ -7,8 +7,8 @@ MultivariateStats = "6f286f6a-111f-5878-ab1e-185364afe411"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-DataFrames = "^0.18.4, ^0.19.0"
+DataFrames = "^0.18.4"
 MLJ = "^0.2.5"
-MLJBase = "^0.2.0, ^0.3.0"
+MLJBase = "^0.2.0"
 MLJModels = "^0.2.5"
 MultivariateStats = "^0.6.0"

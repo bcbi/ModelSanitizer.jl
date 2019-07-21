@@ -7,9 +7,9 @@ version = "0.1.0-DEV"
 Requires = "ae029012-a4dd-5104-9daa-d747884805df"
 
 [compat]
-DataFrames = "^0.18.4, ^0.19.0"
+DataFrames = "^0.18.4"
 MLJ = "^0.2.5"
-MLJBase = "^0.2.0, ^0.3.0"
+MLJBase = "^0.2.0"
 MLJModels = "^0.2.5"
 MultivariateStats = "^0.6.0"
 Requires = "^0.5.2"
