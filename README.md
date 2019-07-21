@@ -10,6 +10,12 @@ src="https://zenodo.org/badge/109460252.svg"/>
 
 <p>
 <a
+href="https://app.bors.tech/repositories/18923">
+<img
+src="https://bors.tech/images/badge_small.svg"
+alt="Bors enabled">
+</a>
+<a
 href="https://travis-ci.com/bcbi/PredictMDSanitizer.jl/branches">
 <img
 src="https://travis-ci.com/bcbi/PredictMDSanitizer.jl.svg?branch=master">
