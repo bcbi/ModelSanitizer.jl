@@ -41,13 +41,13 @@ function _sanitize_iterable!(x::T)::Nothing where T
                 catch ex_inner
                     # showerror(stderr, ex)
                     # Base.show_backtrace(stderr, catch_backtrace())
-                    @debug("Ignoring exception [inner]", exception=(ex, catch_backtrace()))
+                    # @debug("Ignoring exception [inner]", exception=(ex, catch_backtrace()))
                 end
             end
         catch ex_outer
             # showerror(stderr, ex)
             # Base.show_backtrace(stderr, catch_backtrace())
-            @debug("Ignoring exception [outer]", exception=(ex, catch_backtrace()))
+            # @debug("Ignoring exception [outer]", exception=(ex, catch_backtrace()))
         end
     end
     return nothing
@@ -76,12 +76,8 @@ function _sanitize_indexable!(x::T)::Nothing where T
             0
         end
         for i = 1:n
-            try
+            if isassigned(x, i)
                 sanitize!(x[i])
-            catch ex
-                # showerror(stderr, ex)
-                # Base.show_backtrace(stderr, catch_backtrace())
-                @debug("Ignoring exception", exception=(ex, catch_backtrace()))
             end
         end
     end
