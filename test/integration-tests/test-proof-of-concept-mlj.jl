@@ -5,7 +5,7 @@ import MultivariateStats
 import ModelSanitizer
 import Test
 
-MLJ.@load RidgeRegressor
+const RidgeRegressor = MLJModels.MultivariateStats_.RidgeRegressor
 
 mutable struct WrappedRidge <: MLJBase.DeterministicNetwork
     ridge_model
