@@ -27,8 +27,8 @@ Test.@test 8 in elements
 Test.@test 9 in elements
 Test.@test 10 in elements
 
-Test.@test _how_many_elements_occur_in_this_array(elements, []) == 0
-Test.@test _how_many_elements_occur_in_this_array(elements, [0]) == 0
-Test.@test _how_many_elements_occur_in_this_array(elements, [0, 1]) == 1
-Test.@test _how_many_elements_occur_in_this_array(elements, [0, 2, 4]) == 2
-Test.@test _how_many_elements_occur_in_this_array(elements, [1, 3, 5, 0]) == 3
+Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, []) == 0
+Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0]) == 0
+Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0, 1]) == 1
+Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0, 2, 4]) == 2
+Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [1, 3, 5, 0]) == 3
