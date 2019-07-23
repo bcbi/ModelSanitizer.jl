@@ -1,12 +1,20 @@
 import .DataFrames
 
-function sanitize!(x::T)::Nothing where T <: DataFrames.AbstractDataFrame
-    while sum(size(x)) > 0
+function _sanitize!(df::T)::T where T <: DataFrames.AbstractDataFrame
+    while sum(size(df)) > 0
         try
-            DataFrames.select!(x, DataFrames.Not(:))
+            DataFrames.select!(df, DataFrames.Not(:))
         catch
-            DataFrames.deletecols!(x, :)
+            DataFrames.deletecols!(df, :)
         end
     end
-    return nothing
+    return df
+end
+
+# _elements(df) = _elements()
+
+function _elements!(all_elements::Vector{Any}, df::DataFrames.AbstractDataFrame) where T
+    append!(all_elements, df)
+    _elements(all_elements, convert(Array, df))
+    return all_elements
 end
