@@ -25,7 +25,7 @@ using Test
         @testset "integration-tests/test-proof-of-concept-dataframes.jl" begin
             include("integration-tests/test-proof-of-concept-dataframes.jl")
         end
-        @testset "integration-tests/test-proof-of-concept-linearmodel.jl" begin
+        @testset "integration-tests/test-proof-of-concept-linearmodel-1" begin
             include("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
             include("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
         end

@@ -87,9 +87,6 @@ Test.@test all(m.y .== y[training_rows])
 Test.@test !all(m.X .== 0)
 Test.@test !all(m.y .== 0)
 
-data = Data[Data(X), Data(y)]
-elements = ModelSanitizer._elements(data)
-
 sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 
 Test.@test m.X != X[training_rows, :]

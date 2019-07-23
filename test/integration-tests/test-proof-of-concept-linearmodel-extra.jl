@@ -1,3 +1,8 @@
+data = Data[Data(X), Data(y)]
+elements = ModelSanitizer._elements(data)
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
