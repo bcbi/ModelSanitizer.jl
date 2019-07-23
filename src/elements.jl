@@ -1,9 +1,26 @@
 function _elements(d::T) where T
     all_elements = Vector{Any}(undef, 0)
     _elements!(all_elements, d)
-    unique!(all_elements)
-    result = _DataElements(all_elements)
+    all_elements_typefixed = _fix_vector_type(all_elements)
+    unique!(all_elements_typefixed)
+    result = _DataElements(all_elements_typefixed)
     return result
+end
+
+function _elements!(all_elements::Vector{Any}, d::V) where V <: AbstractVector{D} where D <: Data{T} where T
+    # push!(all_elements, d)
+    _elements_fields!(all_elements, d)
+    _elements_iterable!(all_elements, d)
+    _elements_indexable!(all_elements, d)
+    return all_elements
+end
+
+function _elements!(all_elements::Vector{Any}, d::D) where D <: Data{T} where T
+    # push!(all_elements, d)
+    _elements_fields!(all_elements, d)
+    _elements_iterable!(all_elements, d)
+    _elements_indexable!(all_elements, d)
+    return all_elements
 end
 
 function _elements!(all_elements::Vector{Any}, d::T) where T

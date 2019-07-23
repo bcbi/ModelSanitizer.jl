@@ -13,7 +13,7 @@ function zero!(df::T)::T where T <: DataFrames.AbstractDataFrame
 end
 
 function _elements!(all_elements::Vector{Any}, df::DataFrames.AbstractDataFrame) where T
-    push!(all_elements, df)
+    # push!(all_elements, df)
     _elements!(all_elements, convert(Matrix, df))
     return all_elements
 end
