@@ -58,3 +58,12 @@ Test.@test all(i .== 0)
 Test.@test all(j .== "")
 Test.@test all(k .== nothing)
 Test.@test all(l .== nothing)
+
+struct Z end
+
+Test.@test zero(Any) == 0
+Test.@test zero(Z) == 0
+Test.@test zero(String) == ""
+Test.@test zero(Nothing) == nothing
+Test.@test zero(Missing) === missing
+Test.@test ismissing(zero(Missing))

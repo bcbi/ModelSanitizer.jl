@@ -2,6 +2,7 @@ import ModelSanitizer
 import Test
 
 struct Foo end
+
 Test.@test ModelSanitizer._get_property(Foo(), :a) isa Nothing
 Test.@test !ModelSanitizer._is_iterable(typeof(1.0))
 Test.@test !ModelSanitizer._is_iterable(typeof('a'))
@@ -9,3 +10,13 @@ Test.@test !ModelSanitizer._is_iterable(Foo)
 Test.@test !ModelSanitizer._is_indexable(typeof(1.0))
 Test.@test !ModelSanitizer._is_indexable(typeof('a'))
 Test.@test !ModelSanitizer._is_indexable(Foo)
+
+
+
+_sanitize_indexable_with_check_assigned!([1,2,3], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
+_sanitize_indexable_with_check_assigned!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
+_sanitize_indexable_without_check_assigned!([1,2,3], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
+_sanitize_indexable_without_check_assigned!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
+
+_sanitize!(::Foo, data, elements) = error("Cannot sanitize a Foo")
+ModelSanitizer._sanitize_iterable!([1, 2, Foo()], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
