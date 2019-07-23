@@ -1,6 +1,7 @@
 function _elements(d::T) where T
     all_elements = Vector{Any}(undef, 0)
     _elements!(all_elements, d)
+    unique!(all_elements)
     result = _DataElements(all_elements)
     return result
 end
