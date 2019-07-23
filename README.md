@@ -36,7 +36,9 @@ structs. If your model is stored in `m` and your data are stored in `x1`,
 sanitize!(Model(M), Data(x1), Data(x2), Data(x3), ...)
 ```
 
-## Example
+## Examples
+
+### Example 1
 
 ```julia
 julia> using ModelSanitizer
@@ -206,4 +208,9 @@ Test Passed
 
 julia> Test.@test all(m.y .== 0)
 Test Passed
+```
+
+### Example 2
+
+```julia
 ```
