@@ -12,6 +12,13 @@ struct Data{T}
     d::T
 end
 
+"""
+    A wrapper around an object that should always be purged.
+"""
+struct ForceSanitize{T}
+    m::T
+end
+
 struct _DataElements{T}
     v::T
 end

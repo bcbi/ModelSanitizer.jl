@@ -128,3 +128,7 @@ end
 @test m.y != y[training_rows]
 @test !all(m.y .== y[training_rows])
 @test all(m.y .== 0)
+
+# if you know exactly where the data are stored inside the model, you can
+# directly delete them with ForceSanitize:
+sanitize!(ForceSanitize(m.X), ForceSanitize(m.y))

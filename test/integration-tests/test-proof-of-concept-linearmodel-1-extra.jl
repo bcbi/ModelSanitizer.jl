@@ -3,6 +3,50 @@ elements = ModelSanitizer._elements(data)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
+fit!(m, X[training_rows, :], y[training_rows])
+
+Test.@test m.X == X[training_rows, :]
+Test.@test m.y == y[training_rows]
+Test.@test all(m.X .== X[training_rows, :])
+Test.@test all(m.y .== y[training_rows])
+Test.@test !all(m.X .== 0)
+Test.@test !all(m.y .== 0)
+
+sanitize!(ForceSanitize(m.X))
+
+Test.@test m.y == y[training_rows]
+Test.@test all(m.y .== y[training_rows])
+Test.@test !all(m.y .== 0)
+
+Test.@test m.X != X[training_rows, :]
+Test.@test !all(m.X .== X[training_rows, :])
+Test.@test all(m.X .== 0)
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+m = LinearModel{Float64}()
+fit!(m, X[training_rows, :], y[training_rows])
+
+Test.@test m.X == X[training_rows, :]
+Test.@test m.y == y[training_rows]
+Test.@test all(m.X .== X[training_rows, :])
+Test.@test all(m.y .== y[training_rows])
+Test.@test !all(m.X .== 0)
+Test.@test !all(m.y .== 0)
+
+sanitize!(ForceSanitize(m.X), ForceSanitize(m.y))
+
+Test.@test m.X != X[training_rows, :]
+Test.@test m.y != y[training_rows]
+Test.@test !all(m.X .== X[training_rows, :])
+Test.@test !all(m.y .== y[training_rows])
+Test.@test all(m.X .== 0)
+Test.@test all(m.y .== 0)
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -23,6 +67,7 @@ Test.@test !all(m.y .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -44,6 +89,7 @@ Test.@test all(m.X .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -64,6 +110,7 @@ Test.@test all(m.y .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -84,6 +131,7 @@ Test.@test all(m.y .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -104,6 +152,7 @@ Test.@test all(m.y .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]
@@ -124,6 +173,7 @@ Test.@test all(m.y .== 0)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
 Test.@test m.X == X[training_rows, :]

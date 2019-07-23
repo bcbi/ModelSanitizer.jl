@@ -1,4 +1,4 @@
-function zero!(arr::A) where A <: AbstractArray{T, N} where T where N
+function zero!(arr::A; kwargs...) where A <: AbstractArray{T, N} where T where N
     arr[:] .= zero(T)
     return arr
 end
