@@ -14,6 +14,8 @@ end
 
 function _elements!(all_elements::Vector{Any}, df::DataFrames.AbstractDataFrame) where T
     # push!(all_elements, df)
-    _elements!(all_elements, convert(Matrix, df))
+    for column in names(df)
+        _elements!(all_elements, df[column])
+    end
     return all_elements
 end

@@ -1,8 +1,12 @@
+_x_in_y(x, y::AbstractArray)::Bool = x in y
+
+# _x_in_y(x::Missing, y::AbstractArray)::Bool = any(ismissing.(y))
+_x_in_y(x::Missing, y::AbstractArray)::Bool = false
+
 function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr::AbstractArray)::Int where T
     temp::Vector{Bool} = Vector{Bool}(undef, length(elements.v))
-    # for i = 1:length(elements.v)
-    for i = 1:min(1_000, length(elements.v))
-        temp[i] = elements.v[i] in arr
+    for i = 1:length(elements.v)
+        temp[i] = _x_in_y(elements.v[i], arr)
     end
     result::Int = sum(temp)
     return result
