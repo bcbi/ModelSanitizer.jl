@@ -14,7 +14,9 @@ end
 
 function _sanitize!(arr::AbstractArray, data::Vector{Data}, elements::_DataElements; required_matches::Integer = 5)
     for i = 1:length(arr)
-        _sanitize!(arr[i], data::Vector{Data}, elements::_DataElements)
+        if isassigned(arr, i)
+            _sanitize!(arr[i], data::Vector{Data}, elements::_DataElements)
+        end
     end
     if _how_many_elements_occur_in_this_array(elements, arr) >= required_matches
         zero!(arr)
