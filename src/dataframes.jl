@@ -1,13 +1,13 @@
 import .DataFrames
 
-function _sanitize!(df::T)::T where T <: DataFrames.AbstractDataFrame
+function _sanitize!(df::T, data::Vector{Data}, elements::_DataElements)::T where T <: DataFrames.AbstractDataFrame
     zero!(df)
     return df
 end
 
 function zero!(df::T)::T where T <: DataFrames.AbstractDataFrame
     for column in names(df)
-        df[:, column] .= zero!(df[:, column])
+        df[:, column] = zero!(df[:, column])
     end
     return df
 end

@@ -4,9 +4,9 @@ using Test
 @testset "ModelSanitizer.jl" begin
     @testset "Unit tests" begin
         @debug("Running unit tests...")
-        # @testset "unit-tests/test-dataframes.jl" begin
-        #     include("unit-tests/test-dataframes.jl")
-        # end
+        @testset "unit-tests/test-dataframes.jl" begin
+            include("unit-tests/test-dataframes.jl")
+        end
         @testset "unit-tests/test-elements.jl" begin
             include("unit-tests/test-elements.jl")
         end
