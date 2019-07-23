@@ -25,7 +25,7 @@ end
 # end
 
 function _elements!(all_elements::Vector{Any}, df::DataFrames.AbstractDataFrame) where T
-    append!(all_elements, df)
+    push!(all_elements, df)
     _elements(all_elements, convert(Array, df))
     return all_elements
 end

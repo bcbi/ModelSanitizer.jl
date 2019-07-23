@@ -14,7 +14,7 @@ function _sanitize!(arr::A, data::Vector{Data}, elements::_DataElements{T}; requ
 end
 
 function _elements!(all_elements::Vector{Any}, arr::AbstractArray)
-    append!(all_elements, arr)
+    push!(all_elements, arr)
     for object in arr
         _elements!(all_elements, object)
     end

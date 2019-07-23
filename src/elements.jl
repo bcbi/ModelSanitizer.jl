@@ -9,7 +9,7 @@ function _elements(d::T) where T
 end
 
 function _elements!(all_elements::Vector{Any}, d::T) where T
-    append!(all_elements, d)
+    push!(all_elements, d)
     _elements_fields!(all_elements, d)
     _elements_iterable!(all_elements, d)
     _elements_indexable!(all_elements, d)
