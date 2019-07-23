@@ -10,10 +10,10 @@ function _get_property(m, field)
     return nothing
 end
 
-# alternatively, we could replace `Union{typeof.(original_array)}` with
+# alternatively, we could replace `Union{typeof.(original_array)...}` with
 # `typejoin(typeof.(original_array)...)`
 function _fix_vector_type(original_vector::V) where V <: AbstractVector{T} where T
-    new_vector = convert(Vector{Union{typeof.(original_array)}}, original_vector)
+    new_vector = convert(Vector{Union{typeof.(original_vector)...}}, original_vector)
     return new_vector
 end
 

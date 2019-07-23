@@ -44,7 +44,7 @@ mach = MLJ.machine(wrapped_model, boston_task)
 MLJ.fit!(mach; rows = :)
 
 Test.@test mach.fitresult.nodes[1].data == boston_task.X
-Test.@test all(convert(Array, mach.fitresult.nodes[1].data) .== convert(Array, boston_task.X))
+Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== convert(Matrix, boston_task.X))
 for column in names(boston_task.X)
     Test.@test mach.fitresult.nodes[1].data[column] == boston_task.X[column]
     Test.@test all(mach.fitresult.nodes[1].data[column] .== boston_task.X[column])
@@ -53,7 +53,7 @@ Test.@test mach.fitresult.nodes[3].data == boston_task.y
 
 ModelSanitizer.sanitize!(mach)
 
-Test.@test all(convert(Array, mach.fitresult.nodes[1].data) .== 0
+Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== 0
 for column in names(boston_task.X)
     Test.@test mach.fitresult.nodes[1].data[column] == zero(boston_task.X[column])
     Test.@test all(mach.fitresult.nodes[1].data[column] .== 0

@@ -12,20 +12,8 @@ function zero!(df::T)::T where T <: DataFrames.AbstractDataFrame
     return df
 end
 
-# function _sanitize!(df::T)::T where T <: DataFrames.AbstractDataFrame
-#     zero!(df)
-#     while sum(size(df)) > 0
-#         try
-#             DataFrames.select!(df, DataFrames.Not(:))
-#         catch
-#             DataFrames.deletecols!(df, :)
-#         end
-#     end
-#     return df
-# end
-
 function _elements!(all_elements::Vector{Any}, df::DataFrames.AbstractDataFrame) where T
     push!(all_elements, df)
-    _elements(all_elements, convert(Array, df))
+    _elements!(all_elements, convert(Matrix, df))
     return all_elements
 end

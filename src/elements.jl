@@ -2,7 +2,6 @@ function _elements(d::T) where T
     all_elements = Vector{Any}(undef, 0)
     _elements!(all_elements, d)
     typefixed_all_elements = _fix_vector_type(all_elements)
-    sort!(typefixed_all_elements)
     unique!(typefixed_all_elements)
     result = _DataElements(typefixed_all_elements)
     return result
