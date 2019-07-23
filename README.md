@@ -170,43 +170,43 @@ julia> @show r2(m, X[testing_rows, :], y[testing_rows])
 r2(m, X[testing_rows, :], y[testing_rows]) = 0.9156702341388883
 0.9156702341388883
 
-julia> Test.@test m.X == X[training_rows, :]
+julia> @test m.X == X[training_rows, :]
 Test Passed
 
-julia> Test.@test m.y == y[training_rows]
+julia> @test m.y == y[training_rows]
 Test Passed
 
-julia> Test.@test all(m.X .== X[training_rows, :])
+julia> @test all(m.X .== X[training_rows, :])
 Test Passed
 
-julia> Test.@test all(m.y .== y[training_rows])
+julia> @test all(m.y .== y[training_rows])
 Test Passed
 
-julia> Test.@test !all(m.X .== 0)
+julia> @test !all(m.X .== 0)
 Test Passed
 
-julia> Test.@test !all(m.y .== 0)
+julia> @test !all(m.y .== 0)
 Test Passed
 
 julia> sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 Model{LinearModel{Float64}}(LinearModel{Float64}([0.0 … 0.0; 0.0 … 0.0; … ; 0.0 … 0.0; 0.0 … 0.0], [0.0 … 0.0], [0.763981 … -0.378458]))
 
-julia> Test.@test m.X != X[training_rows, :]
+julia> @test m.X != X[training_rows, :]
 Test Passed
 
-julia> Test.@test m.y != y[training_rows]
+julia> @test m.y != y[training_rows]
 Test Passed
 
-julia> Test.@test !all(m.X .== X[training_rows, :])
+julia> @test !all(m.X .== X[training_rows, :])
 Test Passed
 
-julia> Test.@test !all(m.y .== y[training_rows])
+julia> @test !all(m.y .== y[training_rows])
 Test Passed
 
-julia> Test.@test all(m.X .== 0)
+julia> @test all(m.X .== 0)
 Test Passed
 
-julia> Test.@test all(m.y .== 0)
+julia> @test all(m.y .== 0)
 Test Passed
 ```
 

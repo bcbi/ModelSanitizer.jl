@@ -1,10 +1,13 @@
 function _elements(d::T) where T
     all_elements = Vector{Any}(undef, 0)
     _elements!(all_elements, d)
-    all_elements_typefixed = _fix_vector_type(all_elements)
-    unique!(all_elements_typefixed)
-    result = _DataElements(all_elements_typefixed)
+    unique!(all_elements)
+    result = _DataElements(all_elements)
     return result
+    # all_elements_typefixed = _fix_vector_type(all_elements)
+    # unique!(all_elements_typefixed)
+    # result = _DataElements(all_elements_typefixed)
+    # return result
 end
 
 function _elements!(all_elements::Vector{Any}, d::V) where V <: AbstractVector{D} where D <: Data{T} where T

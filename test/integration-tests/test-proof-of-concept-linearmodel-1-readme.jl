@@ -80,18 +80,18 @@ fit!(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[testing_rows, :], y[testing_rows])
 @show r2(m, X[testing_rows, :], y[testing_rows])
 
-Test.@test m.X == X[training_rows, :]
-Test.@test m.y == y[training_rows]
-Test.@test all(m.X .== X[training_rows, :])
-Test.@test all(m.y .== y[training_rows])
-Test.@test !all(m.X .== 0)
-Test.@test !all(m.y .== 0)
+@test m.X == X[training_rows, :]
+@test m.y == y[training_rows]
+@test all(m.X .== X[training_rows, :])
+@test all(m.y .== y[training_rows])
+@test !all(m.X .== 0)
+@test !all(m.y .== 0)
 
 sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 
-Test.@test m.X != X[training_rows, :]
-Test.@test m.y != y[training_rows]
-Test.@test !all(m.X .== X[training_rows, :])
-Test.@test !all(m.y .== y[training_rows])
-Test.@test all(m.X .== 0)
-Test.@test all(m.y .== 0)
+@test m.X != X[training_rows, :]
+@test m.y != y[training_rows]
+@test !all(m.X .== X[training_rows, :])
+@test !all(m.y .== y[training_rows])
+@test all(m.X .== 0)
+@test all(m.y .== 0)
