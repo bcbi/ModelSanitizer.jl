@@ -22,9 +22,9 @@ using Test
     end
     @testset "Integration tests" begin
         @debug("Running integration tests...")
-    #     @testset "integration-tests/test-proof-of-concept-dataframes.jl" begin
-    #         include("integration-tests/test-proof-of-concept-dataframes.jl")
-    #     end
+        @testset "integration-tests/test-proof-of-concept-dataframes.jl" begin
+            include("integration-tests/test-proof-of-concept-dataframes.jl")
+        end
     #     @testset "integration-tests/test-proof-of-concept-linearmodel.jl" begin
     #         include("integration-tests/test-proof-of-concept-linearmodel.jl")
     #     end
