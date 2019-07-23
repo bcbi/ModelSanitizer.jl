@@ -1,5 +1,5 @@
 import DataFrames
-import PredictMDSanitizer
+import ModelSanitizer
 import Test
 
 a = DataFrames.DataFrame()
@@ -19,6 +19,6 @@ Test.@test a[3, :z] == 9
 
 Test.@test size(a) == (3,3)
 
-PredictMDSanitizer.sanitize!(a)
+ModelSanitizer.sanitize!(a)
 
 Test.@test size(a) == (0,0)

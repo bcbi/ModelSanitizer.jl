@@ -1,5 +1,5 @@
 import DataFrames
-import PredictMDSanitizer
+import ModelSanitizer
 import Test
 
 struct A
@@ -44,7 +44,7 @@ Test.@test size(model.a.b2.d1[3]) == (3,2)
 Test.@test size(model.a.b2.d1[5].e) == (3, 1)
 Test.@test size(model.a.b2.d2[3].e) == (0, 0)
 
-PredictMDSanitizer.sanitize!(model)
+ModelSanitizer.sanitize!(model)
 
 Test.@test size(model.a.b1.c2) == (0, 0)
 Test.@test size(model.a.b2.d1[3]) == (0,0)

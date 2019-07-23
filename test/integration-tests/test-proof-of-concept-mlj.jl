@@ -2,7 +2,7 @@ import MLJ
 import MLJBase
 import MLJModels
 import MultivariateStats
-import PredictMDSanitizer
+import ModelSanitizer
 import Test
 
 MLJ.@load RidgeRegressor
@@ -49,7 +49,7 @@ Test.@test mach.fitresult.nodes[3].data[1:10] ≈ [24.0, 21.6, 34.7, 33.4, 36.2,
 Test.@test size(mach.fitresult.nodes[1].data) == (506, 12)
 Test.@test size(mach.fitresult.nodes[3].data) == (506,)
 
-PredictMDSanitizer.sanitize!(mach.fitresult)
+ModelSanitizer.sanitize!(mach.fitresult)
 
 Test.@test size(mach.fitresult.nodes[1].data) == (0, 0)
 # Test.@test size(mach.fitresult.nodes[3].data) == (0,) # TODO: implement searching within Arrays

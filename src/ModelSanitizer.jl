@@ -1,4 +1,4 @@
-module PredictMDSanitizer
+module ModelSanitizer
 
 include("../ext/Requires/src/Requires.jl")
 

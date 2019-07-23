@@ -1,7 +1,7 @@
-using PredictMDSanitizer
+using ModelSanitizer
 using Test
 
-@testset "PredictMDSanitizer.jl" begin
+@testset "ModelSanitizer.jl" begin
     @testset "Unit tests" begin
         @debug("Running unit tests...")
         @testset "unit-tests/test-dataframes.jl" begin
@@ -21,4 +21,3 @@ using Test
         end
     end
 end
-    

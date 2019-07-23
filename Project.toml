@@ -1,4 +1,4 @@
-name = "PredictMDSanitizer"
+name = "ModelSanitizer"
 uuid = "913cd07a-ab48-11e9-38cf-61416429a70b"
 authors = ["Dilum Aluthge <dilum@aluthge.com>"]
 version = "0.1.0-DEV"
