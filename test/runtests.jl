@@ -26,8 +26,12 @@ using Test
             include("integration-tests/test-proof-of-concept-dataframes.jl")
         end
         @testset "integration-tests/test-proof-of-concept-linearmodel-1" begin
-            include("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-1-readme.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-1-extra.jl")
+        end
+        @testset "integration-tests/test-proof-of-concept-linearmodel-2" begin
+            include("integration-tests/test-proof-of-concept-linearmodel-2-readme.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-2-extra.jl")
         end
         @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
             include("integration-tests/test-proof-of-concept-mlj.jl")
