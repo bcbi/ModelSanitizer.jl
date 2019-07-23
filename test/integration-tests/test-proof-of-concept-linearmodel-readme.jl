@@ -65,11 +65,11 @@ function r2(m::LinearModel{T})::T where T
     return _r2
 end
 
-X = randn(Float64, 100_000, 14)
-y = X * randn(Float64, 14) + randn(100_000)
+X = randn(Float64, 5_000, 14)
+y = X * randn(Float64, 14) + randn(5_000)
 m = LinearModel{Float64}()
-testing_rows = 1:2:100_000
-training_rows = setdiff(1:100_000, testing_rows)
+testing_rows = 1:2:5_000
+training_rows = setdiff(1:5_000, testing_rows)
 fit!(m, X[training_rows, :], y[training_rows])
 
 @show mse(m)
