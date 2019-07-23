@@ -1,6 +1,14 @@
-_x_in_y(x, y::AbstractArray)::Bool = x in y
+function _x_in_y(x, y::AbstractArray)::Bool
+    for i = 1:length(y)
+        if isassigned(y, i)
+            if y[i] == x
+                return true
+            end
+        end
+    end
+    return false
+end
 
-# _x_in_y(x::Missing, y::AbstractArray)::Bool = any(ismissing.(y))
 _x_in_y(x::Missing, y::AbstractArray)::Bool = false
 
 function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr::AbstractArray)::Int where T

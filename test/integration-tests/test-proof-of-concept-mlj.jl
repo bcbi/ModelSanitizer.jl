@@ -53,10 +53,10 @@ Test.@test mach.fitresult.nodes[3].data == boston_task.y
 
 ModelSanitizer.sanitize!(ModelSanitizer.Model(mach), ModelSanitizer.Data(boston_task.X), ModelSanitizer.Data(boston_task.y))
 
-Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== 0
+Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== 0)
 for column in names(boston_task.X)
     Test.@test mach.fitresult.nodes[1].data[column] == zero(boston_task.X[column])
-    Test.@test all(mach.fitresult.nodes[1].data[column] .== 0
+    Test.@test all(mach.fitresult.nodes[1].data[column] .== 0)
 end
 Test.@test mach.fitresult.nodes[3].data == zero(mach.fitresult.nodes[3].data)
-Test.@test all(mach.fitresult.nodes[3].data .== 0))
+Test.@test all(mach.fitresult.nodes[3].data .== 0)
