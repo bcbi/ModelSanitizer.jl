@@ -51,7 +51,7 @@ for column in names(boston_task.X)
 end
 Test.@test mach.fitresult.nodes[3].data == boston_task.y
 
-ModelSanitizer.sanitize!(mach)
+ModelSanitizer.sanitize!(Model(mach))
 
 Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== 0
 for column in names(boston_task.X)
