@@ -9,6 +9,6 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 DataFrames = "^0.18.4"
 MLJ = "^0.2.5"
-MLJBase = "^0.2.0"
+MLJBase = "^0.2.3"
 MLJModels = "^0.2.5"
 MultivariateStats = "^0.6.0"

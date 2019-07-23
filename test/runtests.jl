@@ -13,6 +13,9 @@ using Test
         # @testset "unit-tests/test-sanitize.jl" begin
         #     include("unit-tests/test-sanitize.jl")
         # end
+        @testset "unit-tests/test-zero.jl" begin
+            include("unit-tests/test-zero.jl")
+        end
     end
     # @testset "Integration tests" begin
     #     @debug("Running integration tests...")

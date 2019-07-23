@@ -1,17 +1,20 @@
-function _sanitize!(arr::A, data, elements; matches::Integer = 5)::A where A <: AbstractArray{T, N} where T where N
-    # while sum(size(df)) > 0
-    #     try
-    #         DataFrames.select!(df, DataFrames.Not(:))
-    #     catch
-    #         DataFrames.deletecols!(df, :)
-    #     end
-    # end
-    # return df
+function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr::AbstractArray)::Int where T
+    temp::Vector{Bool} = Vector{Bool}(undef, length(elements))
+    for i = 1:length(elements)
+    end
+    result::Int = sum(temp)
+    return result
+end
+
+function _sanitize!(arr::A, data::Vector{Data}, elements::_DataElements{T}; required_matches::Integer = 5)::A where A <: AbstractArray{T, N} where T where N
+    if _how_many_elements_occur_in_this_array(elements, arr) >= required_matches
+        zero!(arr)
+    end
     return arr
 end
 
 function _elements!(all_elements::Vector{Any}, arr::AbstractArray)
-    append!(all_elements, df)
+    append!(all_elements, arr)
     for object in arr
         _elements!(all_elements, object)
     end
