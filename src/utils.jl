@@ -1,12 +1,3 @@
-function _isapprox(x, y; kwargs...)::Bool
-    result::Bool = try
-        isapprox(x, y; kwargs...)
-    catch
-        x == y
-    end
-    return result
-end
-
 function _get_property(m, field)
     try
         result = getproperty(m, field)
