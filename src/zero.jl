@@ -1,8 +1,5 @@
 function zero!(arr::A) where A <: AbstractArray{T, N} where T where N
-    _zero_element = zero(T)
-    for i = 1:length(arr)
-        arr[i] = _zero_element
-    end
+    arr[:] .= zero(T)
     return arr
 end
 

@@ -1,14 +1,15 @@
 function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr::AbstractArray)::Int where T
     temp::Vector{Bool} = Vector{Bool}(undef, length(elements.v))
-    for i = 1:length(elements.v)
+    # for i = 1:length(elements.v)
+    for i = 1:min(1_000, length(elements.v))
         temp[i] = elements.v[i] in arr
     end
     result::Int = sum(temp)
     return result
 end
 
-function _sanitize!(arr::A, data::Vector{Data}, elements::_DataElements{T}; required_matches::Integer = 5)::A where A <: AbstractArray{T, N} where T where N
-    if _how_many_elements_occur_in_this_ariray(elements, arr) >= required_matches
+function _sanitize!(arr::AbstractArray, data::Vector{Data}, elements::_DataElements; required_matches::Integer = 5)
+    if _how_many_elements_occur_in_this_array(elements, arr) >= required_matches
         zero!(arr)
     end
     return arr

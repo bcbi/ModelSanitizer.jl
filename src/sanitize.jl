@@ -19,7 +19,6 @@ function sanitize!(m::Model{T}, varargs...)::Model{T} where T
     return m
 end
 
-
 function sanitize!(m::Model{T}, data::Vector{Data})::Model{T} where T
     _sanitize!(m, data, _elements(data))
     return m
@@ -68,8 +67,6 @@ function _sanitize_indexable!(m::T, data::Vector{Data}, elements::_DataElements)
     end
     return m
 end
-
-
 
 function _sanitize_indexable_with_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
     if _is_indexable(T)
