@@ -12,6 +12,6 @@ struct Data{T}
     d::T
 end
 
-struct _Vector_Of_Data_Elements{T}
+struct _DataElements{T}
     arr::T
 end
