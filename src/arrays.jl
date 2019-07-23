@@ -1,7 +1,7 @@
 function _x_in_y(x, y::AbstractArray)::Bool
     for i = 1:length(y)
         if isassigned(y, i)
-            if y[i] == x
+            if isapprox(x, y[i])
                 return true
             end
         end
