@@ -15,8 +15,3 @@ end
 struct _DataElements{T}
     v::T
 end
-
-function Base.iterate(elements::_DataElements{T}, varargs...) where T
-    result = Base.iterate(elements.v, varargs...)
-    return result
-end

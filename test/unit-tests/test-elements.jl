@@ -16,16 +16,16 @@ data = ModelSanitizer.Data[ModelSanitizer.Data(x1),
 
 elements = ModelSanitizer._elements(data)
 
-Test.@test 1 in elements
-Test.@test 2 in elements
-Test.@test 3 in elements
-Test.@test 4 in elements
-Test.@test 5 in elements
-Test.@test 6 in elements
-Test.@test 7 in elements
-Test.@test 8 in elements
-Test.@test 9 in elements
-Test.@test 10 in elements
+Test.@test 1 in elements.v
+Test.@test 2 in elements.v
+Test.@test 3 in elements.v
+Test.@test 4 in elements.v
+Test.@test 5 in elements.v
+Test.@test 6 in elements.v
+Test.@test 7 in elements.v
+Test.@test 8 in elements.v
+Test.@test 9 in elements.v
+Test.@test 10 in elements.v
 
 Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, []) == 0
 Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0]) == 0
