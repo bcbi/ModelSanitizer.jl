@@ -1,6 +1,7 @@
 function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr::AbstractArray)::Int where T
-    temp::Vector{Bool} = Vector{Bool}(undef, length(elements))
-    for i = 1:length(elements)
+    temp::Vector{Bool} = Vector{Bool}(undef, length(elements.v))
+    for i = 1:length(elements.v)
+        temp[i] = elements.v[i] in arr
     end
     result::Int = sum(temp)
     return result
