@@ -13,7 +13,7 @@ struct Data{T}
 end
 
 struct _DataElements{T}
-    arr::T
+    v::T
 end
 
 function Base.iterate(elements::_DataElements{T}, varargs...) where T
