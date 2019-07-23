@@ -1,43 +1,49 @@
 """
+    Sanitize a model.
+
+    If your model is stored in `m` and your data are stored in `x1`,
+    `x2`, `x3`, etc. then you can sanitize your model with:
+    ```julia
+    sanitize!(Model(M), Data(x1), Data(x2), Data(x3), ...)
+    ```
 """
 function sanitize! end
 
-function sanitize!(x::T)::Nothing where T
-    _sanitize_fields!(x)
-    _sanitize_iterable!(x)
-    _sanitize_indexable!(x)
-    return nothing
+function sanitize!(m::Model{T})::Model{T} where T
+    sanitize!(m, Vector{Data}(undef, 0))
+    return m
 end
 
-# function sanitize!(x::T)::Nothing where T <: Nothing
-#     return nothing
-# end
+function sanitize!(m::Model{T}, varargs...)::Model{T} where T
+    sanitize!(m, convert(Vector{Data}, collect(varargs)))
+    return m
+end
 
-function _sanitize_fields!(x::T)::Nothing where T
+function sanitize!(m::Model{T}, data::Vector{Data})::Model{T} where T
+    _sanitize!(m, data, _elements(data))
+    return m
+end
+
+function _sanitize!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+    _sanitize_fields!(m, data, elements)
+    _sanitize_iterable!(m, data, elements)
+    _sanitize_indexable!(m, data, elements)
+    return m
+end
+
+function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
     for field in fieldnames(T)
-        sanitize!(_get_property(x, field))
+        _sanitize!(_get_property(m, field), data, elements)
     end
-    return nothing
+    return m
 end
 
-function _get_property(x, field)
-    try
-        result = getproperty(x, field)
-        return result
-    catch ex
-        # showerror(stderr, ex)
-        # Base.show_backtrace(stderr, catch_backtrace())
-        @debug("Ignoring exception", exception=(ex, catch_backtrace()))
-    end
-    return nothing
-end
-
-function _sanitize_iterable!(x::T)::Nothing where T
+function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
     if _is_iterable(T)
         try
-            for element in x
+            for object in x
                 try
-                    sanitize!(element)
+                    _sanitize!(object, data, elements)
                 catch ex_inner
                     # showerror(stderr, ex)
                     # Base.show_backtrace(stderr, catch_backtrace())
@@ -50,65 +56,37 @@ function _sanitize_iterable!(x::T)::Nothing where T
             # @debug("Ignoring exception [outer]", exception=(ex, catch_backtrace()))
         end
     end
-    return nothing
+    return m
 end
 
-function _is_iterable(::Type{T})::Bool where T <: Number
-    return false
-end
-
-function _is_iterable(::Type{T})::Bool where T <: Char
-    return false
-end
-
-function _is_iterable(::Type{T})::Bool where T
-    return hasmethod(iterate, (T,))
-end
-
-function _sanitize_indexable!(x::T)::Nothing where T
+function _sanitize_indexable!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
     if _has_isassigned(T)
-        _sanitize_indexable_with_check_assigned!(x)
+        _sanitize_indexable_with_check_assigned!(m, data, elements)
     else
-        _sanitize_indexable_without_check_assigned!(x)
+        _sanitize_indexable_without_check_assigned!(m, data, elements)
     end
-    return nothing
+    return m
 end
 
-function _has_isassigned(::Type{T})::Bool where T
-    hasmethod(isassigned, (T, Int,))
-end
-
-function _sanitize_indexable_with_check_assigned!(x::T)::Nothing where T
+function _sanitize_indexable_with_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
     if _is_indexable(T)
-        for i = 1:length(x)
-            if isassigned(x, i)
-                sanitize!(x[i])
+        for i = 1:length(m)
+            if isassigned(m, i)
+                _sanitize!(m[i], data, elements)
             end
         end
     end
-    return nothing
+    return m
 end
 
-function _sanitize_indexable_without_check_assigned!(x::T)::Nothing where T
+function _sanitize_indexable_without_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements) where T
     if _is_indexable(T)
-        for i = 1:length(x)
+        for i = 1:length(m)
             try
-                sanitize!(x[i])
+                _sanitize!(m[i], data, elements)
             catch
             end
         end
     end
-    return nothing
-end
-
-function _is_indexable(::Type{T})::Bool where T <: Number
-    return false
-end
-
-function _is_indexable(::Type{T})::Bool where T <: Char
-    return false
-end
-
-function _is_indexable(::Type{T})::Bool where T
-    return hasmethod(length, (T,))
+    return m
 end

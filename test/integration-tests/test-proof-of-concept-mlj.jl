@@ -5,7 +5,7 @@ import MultivariateStats
 import ModelSanitizer
 import Test
 
-MLJ.@load RidgeRegressor
+const RidgeRegressor = MLJModels.MultivariateStats_.RidgeRegressor
 
 mutable struct WrappedRidge <: MLJBase.DeterministicNetwork
     ridge_model
@@ -43,13 +43,20 @@ mach = MLJ.machine(wrapped_model, boston_task)
 
 MLJ.fit!(mach; rows = :)
 
-Test.@test mach.fitresult.nodes[1].data[1:10, :Crim] ≈ [0.00632, 0.02731, 0.02729, 0.03237, 0.06905, 0.02985,  0.08829, 0.14455, 0.21124, 0.17004]
-Test.@test mach.fitresult.nodes[3].data[1:10] ≈ [24.0, 21.6, 34.7, 33.4, 36.2, 28.7, 22.9, 27.1, 16.5, 18.9]
+Test.@test mach.fitresult.nodes[1].data == boston_task.X
+Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== convert(Matrix, boston_task.X))
+for column in names(boston_task.X)
+    Test.@test mach.fitresult.nodes[1].data[column] == boston_task.X[column]
+    Test.@test all(mach.fitresult.nodes[1].data[column] .== boston_task.X[column])
+end
+Test.@test mach.fitresult.nodes[3].data == boston_task.y
 
-Test.@test size(mach.fitresult.nodes[1].data) == (506, 12)
-Test.@test size(mach.fitresult.nodes[3].data) == (506,)
+ModelSanitizer.sanitize!(ModelSanitizer.Model(mach), ModelSanitizer.Data(boston_task.X), ModelSanitizer.Data(boston_task.y))
 
-ModelSanitizer.sanitize!(mach.fitresult)
-
-Test.@test size(mach.fitresult.nodes[1].data) == (0, 0)
-# Test.@test size(mach.fitresult.nodes[3].data) == (0,) # TODO: implement searching within Arrays
+Test.@test all(convert(Matrix, mach.fitresult.nodes[1].data) .== 0)
+for column in names(boston_task.X)
+    Test.@test mach.fitresult.nodes[1].data[column] == zero(boston_task.X[column])
+    Test.@test all(mach.fitresult.nodes[1].data[column] .== 0)
+end
+Test.@test mach.fitresult.nodes[3].data == zero(mach.fitresult.nodes[3].data)
+Test.@test all(mach.fitresult.nodes[3].data .== 0)

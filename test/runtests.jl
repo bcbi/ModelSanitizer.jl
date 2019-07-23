@@ -7,14 +7,31 @@ using Test
         @testset "unit-tests/test-dataframes.jl" begin
             include("unit-tests/test-dataframes.jl")
         end
+        @testset "unit-tests/test-elements.jl" begin
+            include("unit-tests/test-elements.jl")
+        end
         @testset "unit-tests/test-sanitize.jl" begin
             include("unit-tests/test-sanitize.jl")
+        end
+        @testset "unit-tests/test-utils.jl" begin
+            include("unit-tests/test-utils.jl")
+        end
+        @testset "unit-tests/test-zero.jl" begin
+            include("unit-tests/test-zero.jl")
         end
     end
     @testset "Integration tests" begin
         @debug("Running integration tests...")
         @testset "integration-tests/test-proof-of-concept-dataframes.jl" begin
             include("integration-tests/test-proof-of-concept-dataframes.jl")
+        end
+        @testset "integration-tests/test-proof-of-concept-linearmodel-1" begin
+            include("integration-tests/test-proof-of-concept-linearmodel-1-readme.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-1-extra.jl")
+        end
+        @testset "integration-tests/test-proof-of-concept-linearmodel-2" begin
+            include("integration-tests/test-proof-of-concept-linearmodel-2-readme.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-2-extra.jl")
         end
         @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
             include("integration-tests/test-proof-of-concept-mlj.jl")
