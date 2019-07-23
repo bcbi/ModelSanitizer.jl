@@ -3,6 +3,8 @@ function zero!(arr::A) where A <: AbstractArray{T, N} where T where N
     return arr
 end
 
+Base.zero(::Type{Any}) = 0
+
 Base.zero(::Type{T}) where T = 0
 
 Base.zero(::Type{T}) where T <: AbstractString = ""
