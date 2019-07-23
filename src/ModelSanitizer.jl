@@ -1,7 +1,8 @@
 module ModelSanitizer
 
 export sanitize!
-export Model, Data
+export Model
+export Data
 
 include("../ext/Requires/src/Requires.jl")
 

@@ -38,7 +38,6 @@ Test.@test model.a.b1.c2[3, :x] == 3
 Test.@test model.a.b1.c2[4, :x] == 4
 Test.@test model.a.b1.c2[5, :x] == 5
 
-
 Test.@test model.a.b1.c2[1, :y] == 6
 Test.@test model.a.b1.c2[2, :y] == 7
 Test.@test model.a.b1.c2[3, :y] == 8
@@ -73,16 +72,19 @@ Test.@test model.a.b1.c2[2, :x] == 0
 Test.@test model.a.b1.c2[3, :x] == 0
 Test.@test model.a.b1.c2[4, :x] == 0
 Test.@test model.a.b1.c2[5, :x] == 0
+
 Test.@test model.a.b1.c2[1, :y] == 0
 Test.@test model.a.b1.c2[2, :y] == 0
 Test.@test model.a.b1.c2[3, :y] == 0
 Test.@test model.a.b1.c2[4, :y] == 0
 Test.@test model.a.b1.c2[5, :y] == 0
+
 Test.@test model.a.b2.d1[3][1, :z] == 0
 Test.@test model.a.b2.d1[3][2, :z] == 0
 Test.@test model.a.b2.d1[3][3, :z] == 0
 Test.@test model.a.b2.d1[3][4, :z] == 0
 Test.@test model.a.b2.d1[3][5, :z] == 0
+
 Test.@test model.a.b2.d1[3][1, :t] == 0
 Test.@test model.a.b2.d1[3][2, :t] == 0
 Test.@test model.a.b2.d1[3][3, :t] == 0

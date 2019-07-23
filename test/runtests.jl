@@ -14,16 +14,16 @@ using Test
             include("unit-tests/test-sanitize.jl")
         end
         @testset "unit-tests/test-utils.jl" begin
-            # include("unit-tests/test-utils.jl")
+            include("unit-tests/test-utils.jl")
         end
         @testset "unit-tests/test-zero.jl" begin
-            # include("unit-tests/test-zero.jl")
+            include("unit-tests/test-zero.jl")
         end
     end
     @testset "Integration tests" begin
         @debug("Running integration tests...")
         @testset "integration-tests/test-proof-of-concept-dataframes.jl" begin
-            # include("integration-tests/test-proof-of-concept-dataframes.jl")
+            include("integration-tests/test-proof-of-concept-dataframes.jl")
         end
         @testset "integration-tests/test-proof-of-concept-linearmodel.jl" begin
             # include("integration-tests/test-proof-of-concept-linearmodel.jl")
