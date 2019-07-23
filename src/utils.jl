@@ -1,3 +1,10 @@
+_compare(a, b)::Bool = a == b
+
+_compare(a::Number, b::Number)::Bool = isapprox(a, b)
+_compare(a::Missing, b::Number)::Bool = isapprox(a, b)
+_compare(a::Number, b::Missing)::Bool = isapprox(a, b)
+_compare(a::Missing, b::Missing)::Bool = isapprox(a, b)
+
 function _get_property(m, field)
     try
         result = getproperty(m, field)

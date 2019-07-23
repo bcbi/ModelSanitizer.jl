@@ -1,6 +1,6 @@
 function _x_in_y(x, y::AbstractArray)::Bool
     for i = 1:length(y)
-        if isassigned(y, i) && x == y[i]
+        if isassigned(y, i) && _compare(x, y[i])
             return true
         end
     end

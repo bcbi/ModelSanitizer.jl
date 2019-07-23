@@ -33,8 +33,8 @@ using Test
             include("integration-tests/test-proof-of-concept-linearmodel-2-readme.jl")
             include("integration-tests/test-proof-of-concept-linearmodel-2-extra.jl")
         end
-        @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
-            include("integration-tests/test-proof-of-concept-mlj.jl")
-        end
+        # @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
+            # include("integration-tests/test-proof-of-concept-mlj.jl")
+        # end
     end
 end
