@@ -50,7 +50,6 @@ end
 
 function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     for field in fieldnames(T)
-        @debug("Sanitizing $(T).$(field)")
         _sanitize!(_get_property(m, field), data, elements)
     end
     return m
