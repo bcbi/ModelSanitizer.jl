@@ -105,13 +105,6 @@ testing_rows = 1:2:1_000
 training_rows = setdiff(1:1_000, testing_rows)
 fit!(m, X[training_rows, :], y[training_rows])
 
-# @show mse(m)
-# @show rmse(m)
-# @show r2(m)
-# @show mse(m, X[testing_rows, :], y[testing_rows])
-# @show rmse(m, X[testing_rows, :], y[testing_rows])
-# @show r2(m, X[testing_rows, :], y[testing_rows])
-
 @test m.X == X[training_rows, :]
 @test all(convert(Matrix, m.X) .== convert(Matrix, X[training_rows, :]))
 for column in names(m.X)
@@ -124,8 +117,8 @@ end
 @test !all(m.y .== 0)
 
 # before sanitization, we can make predictions
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])
@@ -147,8 +140,8 @@ end
 @test all(m.y .== 0)
 
 # after sanitization, we are still able to make predictions
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])
@@ -161,8 +154,8 @@ end
 sanitize!(ForceSanitize(m.X), ForceSanitize(m.y))
 
 # we can still make predictions even after using ForceSanitize
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])

@@ -86,8 +86,8 @@ fit!(m, X[training_rows, :], y[training_rows])
 @test !all(m.y .== 0)
 
 # before sanitization, we can make predictions
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])
@@ -105,8 +105,8 @@ sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 @test all(m.y .== 0)
 
 # after sanitization, we are still able to make predictions
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])
@@ -119,8 +119,8 @@ sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 sanitize!(ForceSanitize(m.X), ForceSanitize(m.y))
 
 # we can still make predictions even after using ForceSanitize
-@show predict(m, X[testing_rows, :])
-@show predict(m, X[training_rows, :])
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
 @show mse(m, X[training_rows, :], y[training_rows])
 @show rmse(m, X[training_rows, :], y[training_rows])
 @show r2(m, X[training_rows, :], y[training_rows])
