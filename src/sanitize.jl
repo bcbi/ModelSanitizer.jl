@@ -24,21 +24,28 @@ function sanitize!(m::Model{T}, data::Vector{Data}; kwargs...)::Model{T} where T
     return m
 end
 
-function sanitize!(m::ForceSanitize, varargs...; kwargs...)
-    sanitize!(convert(Vector{ForceSanitize}, vcat(m, collect(varargs))); kwargs...)
-    return m, varargs...
+function sanitize!(location::ForceSanitize, varargs...; kwargs...)
+    sanitize!(convert(Vector{ForceSanitize}, vcat(location, collect(varargs))); kwargs...)
+    return location, varargs...
 end
 
-function sanitize!(ms::Vector{ForceSanitize}; kwargs...)
-    _sanitize!(ms; kwargs...)
-    return ms
+function sanitize!(locations::Vector{ForceSanitize}; kwargs...)
+    _sanitize!(locations; kwargs...)
+    return locations
 end
 
-function _sanitize!(ms::Vector{ForceSanitize}; kwargs...)
-    for i = 1:length(ms)
-        zero!(ms[i].loc; kwargs...)
+function _sanitize!(locations::Vector{ForceSanitize}; kwargs...)
+    for i = 1:length(locations)
+        if isassigned(locations, i)
+            _sanitize!(locations[i]; kwargs...)
+        end
     end
-    return ms
+    return locations
+end
+
+function _sanitize!(location::ForceSanitize; kwargs...)
+    zero!(location.loc; kwargs...)
+    return location
 end
 
 function _sanitize!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
