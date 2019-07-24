@@ -17,8 +17,8 @@ Test.@test r2(m) == r2(m, X[training_rows, :], y[training_rows])
 
 training_r2_before_sanitization = r2(m, X[training_rows, :], y[training_rows])
 testing_r2_before_sanitization = r2(m, X[testing_rows, :], y[testing_rows])
-Test.@test training_r2_before_sanitization > 0.8
-Test.@test testing_r2_before_sanitization > 0.8
+Test.@test training_r2_before_sanitization > 0.6
+Test.@test testing_r2_before_sanitization > 0.6
 
 Test.@test m.X == X[training_rows, :]
 Test.@test m.y == y[training_rows]
@@ -34,8 +34,8 @@ Test.@test predict(m, X[testing_rows, :]) isa AbstractVector
 
 training_r2_after_sanitization = r2(m, X[training_rows, :], y[training_rows])
 testing_r2_after_sanitization = r2(m, X[testing_rows, :], y[testing_rows])
-Test.@test training_r2_after_sanitization > 0.8
-Test.@test testing_r2_after_sanitization > 0.8
+Test.@test training_r2_after_sanitization > 0.6
+Test.@test testing_r2_after_sanitization > 0.6
 Test.@test training_r2_before_sanitization == training_r2_after_sanitization
 Test.@test testing_r2_before_sanitization == testing_r2_after_sanitization
 
