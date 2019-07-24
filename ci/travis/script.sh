@@ -11,7 +11,7 @@ julia $JULIA_FLAGS -e '
     Pkg.build("ModelSanitizer");
     '
 
-travis_wait julia $JULIA_FLAGS -e '
+julia $JULIA_FLAGS -e '
     import Pkg;
     Pkg.test("ModelSanitizer"; coverage=true);
     '
