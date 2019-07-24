@@ -15,6 +15,7 @@ function _how_many_elements_occur_in_this_array(elements::_DataElements{T}, arr:
         temp[i] = _x_in_y(elements.v[i], arr)
     end
     result::Int = sum(temp)
+    @debug("$(result) element(s) occured in the array.")
     return result
 end
 
