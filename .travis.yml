@@ -38,4 +38,4 @@ os:
 
 ############################################################################
 
-script: ./ci/travis/script.sh
+script: travis_wait ./ci/travis/script.sh
