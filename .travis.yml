@@ -10,8 +10,10 @@ env:
     global:
         - JULIA_DEBUG="all"
     matrix:
-        - COMPILED_MODULES="no"
-        - COMPILED_MODULES="yes"
+        - COMPILED_MODULES="no" INLINE="no"
+        - COMPILED_MODULES="no" INLINE="yes"
+        - COMPILED_MODULES="yes" INLINE="no"
+        - COMPILED_MODULES="yes" INLINE="no"
 
 git:
     depth: 99999999
@@ -38,4 +40,4 @@ os:
 
 ############################################################################
 
-script: travis_wait ./ci/travis/script.sh
+script: ./ci/travis/script.sh

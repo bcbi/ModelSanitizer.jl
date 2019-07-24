@@ -52,7 +52,7 @@ sanitize!(ForceSanitize(m.x1), ForceSanitize(m.x2), ForceSanitize(m.x3), ...)
 
 ## Examples
 
-### Example 1
+### Example
 
 ```julia
 julia> using ModelSanitizer

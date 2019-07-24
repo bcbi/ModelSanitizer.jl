@@ -37,9 +37,11 @@ using Test
             @debug("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
             include("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
         end
-        @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
-            @debug("integration-tests/test-proof-of-concept-mlj.jl")
-            include("integration-tests/test-proof-of-concept-mlj.jl")
+        if Base.JLOptions().can_inline > 0
+            @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
+                @debug("integration-tests/test-proof-of-concept-mlj.jl")
+                include("integration-tests/test-proof-of-concept-mlj.jl")
+            end
         end
     end
 end
