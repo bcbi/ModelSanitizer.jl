@@ -11,12 +11,10 @@ Test.@test !ModelSanitizer._is_indexable(typeof(1.0))
 Test.@test !ModelSanitizer._is_indexable(typeof('a'))
 Test.@test !ModelSanitizer._is_indexable(Foo)
 
-
-
 ModelSanitizer._sanitize_indexable_with_check_assigned!([1,2,3], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 ModelSanitizer._sanitize_indexable_with_check_assigned!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 ModelSanitizer._sanitize_indexable_without_check_assigned!([1,2,3], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 ModelSanitizer._sanitize_indexable_without_check_assigned!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 
-ModelSanitizer._sanitize!(::Foo, data, elements) = error("Cannot sanitize a Foo")
-ModelSanitizer._sanitize_iterable!([1, 2, Foo()], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
+# ModelSanitizer._sanitize!(::Foo, data, elements) = error("Cannot sanitize a Foo")
+# ModelSanitizer._sanitize_iterable!([1, 2, Foo()], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))

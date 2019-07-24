@@ -50,7 +50,6 @@ end
 
 function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     for field in fieldnames(T)
-        @debug("Sanitizing $(T).$(field)")
         _sanitize!(_get_property(m, field), data, elements)
     end
     return m
@@ -59,7 +58,7 @@ end
 function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     if _is_iterable(T)
         try
-            for object in x
+            for object in m
                 try
                     _sanitize!(object, data, elements)
                 catch ex_inner

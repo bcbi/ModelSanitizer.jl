@@ -1,9 +1,9 @@
 _compare(a, b)::Bool = a == b
 
 _compare(a::Number, b::Number)::Bool = isapprox(a, b)
-_compare(a::Missing, b::Number)::Bool = isapprox(a, b)
-_compare(a::Number, b::Missing)::Bool = isapprox(a, b)
-_compare(a::Missing, b::Missing)::Bool = isapprox(a, b)
+_compare(a::Missing, b::Number)::Bool = false
+_compare(a::Number, b::Missing)::Bool = false
+_compare(a::Missing, b::Missing)::Bool = false
 
 function _get_property(m, field)
     try
