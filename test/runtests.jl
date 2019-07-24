@@ -31,17 +31,11 @@ using Test
             @debug("integration-tests/test-proof-of-concept-dataframes.jl")
             include("integration-tests/test-proof-of-concept-dataframes.jl")
         end
-        @testset "integration-tests/test-proof-of-concept-linearmodel-1" begin
-            @debug("integration-tests/test-proof-of-concept-linearmodel-1-readme.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-1-readme.jl")
-            @debug("integration-tests/test-proof-of-concept-linearmodel-1-extra.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-1-extra.jl")
-        end
-        @testset "integration-tests/test-proof-of-concept-linearmodel-2" begin
-            @debug("integration-tests/test-proof-of-concept-linearmodel-2-readme.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-2-readme.jl")
-            @debug("integration-tests/test-proof-of-concept-linearmodel-2-extra.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-2-extra.jl")
+        @testset "integration-tests/test-proof-of-concept-linearmodel" begin
+            @debug("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
+            @debug("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
         end
         @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
             @debug("integration-tests/test-proof-of-concept-mlj.jl")
