@@ -13,7 +13,7 @@ env:
         - COMPILED_MODULES="no" INLINE="no"
         - COMPILED_MODULES="no" INLINE="yes"
         - COMPILED_MODULES="yes" INLINE="no"
-        - COMPILED_MODULES="yes" INLINE="no"
+        - COMPILED_MODULES="yes" INLINE="yes"
 
 git:
     depth: 99999999
