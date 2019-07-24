@@ -36,7 +36,7 @@ end
 
 function _sanitize!(ms::Vector{ForceSanitize}; kwargs...)
     for i = 1:length(ms)
-        zero!(ms[i].x; kwargs...)
+        zero!(ms[i].loc; kwargs...)
     end
     return ms
 end
