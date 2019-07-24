@@ -2,15 +2,7 @@
 
 <p>
 <a
-href="https://doi.org/10.5281/zenodo.1291209">
-<img
-src="https://zenodo.org/badge/109460252.svg"/>
-</a>
-</p>
-
-<p>
-<a
-href="https://app.bors.tech/repositories/18923">
+href="https://app.bors.tech/repositories/18976">
 <img
 src="https://bors.tech/images/badge_small.svg"
 alt="Bors enabled">
@@ -50,9 +42,7 @@ data with:
 sanitize!(ForceSanitize(m.x1), ForceSanitize(m.x2), ForceSanitize(m.x3), ...)
 ```
 
-## Examples
-
-### Example
+## Example
 
 ```julia
 julia> using ModelSanitizer
