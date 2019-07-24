@@ -4,13 +4,13 @@ authors = ["Dilum Aluthge <dilum@aluthge.com>"]
 version = "0.1.0-DEV"
 
 [compat]
-DataFrames = "^0.18.4"
+DataFrames = "=0.18.4"
 MLJ = "=0.2.5"
 MLJBase = "=0.2.3"
 MLJModels = "=0.2.5"
-MultivariateStats = "^0.6.0"
-StatsBase = "^0.31.0"
-StatsModels = "^0.6.2"
+MultivariateStats = "=0.6.0"
+StatsBase = "=0.31.0"
+StatsModels = "=0.6.2"
 julia = "^1.1.0"
 
 [extras]

@@ -9,19 +9,35 @@ branches:
 env:
     global:
         - JULIA_DEBUG="all"
+    matrix:
+        - COMPILED_MODULES="no" INLINE="no"
+        - COMPILED_MODULES="no" INLINE="yes"
+        - COMPILED_MODULES="yes" INLINE="no"
+        - COMPILED_MODULES="yes" INLINE="no"
+
+git:
+    depth: 99999999
+
+julia:
+    - 1.1
 
 language: julia
+
+matrix:
+    allow_failures:
+        - julia: "nightly"
+        - os: osx
+    fast_finish: true
+
+notifications:
+    email:
+        on_success: never # default: change
+        on_failure: always # default: always
+
 os:
     - linux
 #     - osx
-julia:
-    - 1.1
-#     - nightly
-matrix:
-    allow_failures:
-        - julia: nightly
-    fast_finish: true
-notifications:
-    email: false
-after_success:
-    - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
+
+############################################################################
+
+script: ./ci/travis/script.sh

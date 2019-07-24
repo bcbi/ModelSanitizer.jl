@@ -24,6 +24,12 @@ function predict(m::LinearModel{T}, X::Matrix{T})::Vector{T} where T
     return y_hat
 end
 
+function predict(m::LinearModel{T})::Vector{T} where T
+    X::Matrix{T} = m.X
+    y_hat::Vector{T} = predict(m, X)
+    return y_hat
+end
+
 function mse(y::Vector{T}, y_hat::Vector{T})::T where T
     _mse::T = mean((y .- y_hat).^2)
     return _mse
@@ -65,20 +71,12 @@ function r2(m::LinearModel{T})::T where T
     return _r2
 end
 
-X = randn(Float64, 5_000, 14)
-y = X * randn(Float64, 14) + randn(5_000)
+X = randn(Float64, 200, 14)
+y = X * randn(Float64, 14) + randn(200)
 m = LinearModel{Float64}()
-testing_rows = 1:2:5_000
-training_rows = setdiff(1:5_000, testing_rows)
+testing_rows = 1:2:200
+training_rows = setdiff(1:200, testing_rows)
 fit!(m, X[training_rows, :], y[training_rows])
-
-@show mse(m)
-@show rmse(m)
-@show r2(m)
-
-@show mse(m, X[testing_rows, :], y[testing_rows])
-@show rmse(m, X[testing_rows, :], y[testing_rows])
-@show r2(m, X[testing_rows, :], y[testing_rows])
 
 @test m.X == X[training_rows, :]
 @test m.y == y[training_rows]
@@ -86,6 +84,16 @@ fit!(m, X[training_rows, :], y[training_rows])
 @test all(m.y .== y[training_rows])
 @test !all(m.X .== 0)
 @test !all(m.y .== 0)
+
+# before sanitization, we can make predictions
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
+@show mse(m, X[training_rows, :], y[training_rows])
+@show rmse(m, X[training_rows, :], y[training_rows])
+@show r2(m, X[training_rows, :], y[training_rows])
+@show mse(m, X[testing_rows, :], y[testing_rows])
+@show rmse(m, X[testing_rows, :], y[testing_rows])
+@show r2(m, X[testing_rows, :], y[testing_rows])
 
 sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 
@@ -95,3 +103,27 @@ sanitize!(Model(m), Data(X), Data(y)) # sanitize the model with ModelSanitizer
 @test !all(m.y .== y[training_rows])
 @test all(m.X .== 0)
 @test all(m.y .== 0)
+
+# after sanitization, we are still able to make predictions
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
+@show mse(m, X[training_rows, :], y[training_rows])
+@show rmse(m, X[training_rows, :], y[training_rows])
+@show r2(m, X[training_rows, :], y[training_rows])
+@show mse(m, X[testing_rows, :], y[testing_rows])
+@show rmse(m, X[testing_rows, :], y[testing_rows])
+@show r2(m, X[testing_rows, :], y[testing_rows])
+
+# if you know exactly where the data are stored inside the model, you can
+# directly delete them with ForceSanitize:
+sanitize!(ForceSanitize(m.X), ForceSanitize(m.y))
+
+# we can still make predictions even after using ForceSanitize
+predict(m, X[testing_rows, :])
+predict(m, X[training_rows, :])
+@show mse(m, X[training_rows, :], y[training_rows])
+@show rmse(m, X[training_rows, :], y[training_rows])
+@show r2(m, X[training_rows, :], y[training_rows])
+@show mse(m, X[testing_rows, :], y[testing_rows])
+@show rmse(m, X[testing_rows, :], y[testing_rows])
+@show r2(m, X[testing_rows, :], y[testing_rows])

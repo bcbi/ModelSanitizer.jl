@@ -34,3 +34,8 @@ Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0]) 
 Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0, 1]) == 1
 Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [0, 2, 4]) == 2
 Test.@test ModelSanitizer._how_many_elements_occur_in_this_array(elements, [1, 3, 5, 0]) == 3
+
+ModelSanitizer._elements_indexable_with_check_assigned!(Any[], [1, 2, 3])
+ModelSanitizer._elements_indexable_with_check_assigned!(Any[], Bar(0))
+ModelSanitizer._elements_indexable_without_check_assigned!(Any[], [1, 2, 3])
+ModelSanitizer._elements_indexable_without_check_assigned!(Any[], Bar(0))

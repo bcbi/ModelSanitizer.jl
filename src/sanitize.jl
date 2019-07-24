@@ -9,36 +9,54 @@
 """
 function sanitize! end
 
-function sanitize!(m::Model{T})::Model{T} where T
-    sanitize!(m, Vector{Data}(undef, 0))
+function sanitize!(m::Model{T}; kwargs...)::Model{T} where T
+    sanitize!(m, Vector{Data}(undef, 0); kwargs...)
     return m
 end
 
-function sanitize!(m::Model{T}, varargs...)::Model{T} where T
-    sanitize!(m, convert(Vector{Data}, collect(varargs)))
+function sanitize!(m::Model{T}, varargs...; kwargs...)::Model{T} where T
+    sanitize!(m, convert(Vector{Data}, collect(varargs)); kwargs...)
     return m
 end
 
-function sanitize!(m::Model{T}, data::Vector{Data})::Model{T} where T
-    _sanitize!(m, data, _elements(data))
+function sanitize!(m::Model{T}, data::Vector{Data}; kwargs...)::Model{T} where T
+    _sanitize!(m, data, _elements(data); kwargs...)
     return m
 end
 
-function _sanitize!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+function sanitize!(m::ForceSanitize, varargs...; kwargs...)
+    sanitize!(convert(Vector{ForceSanitize}, vcat(m, collect(varargs))); kwargs...)
+    return m, varargs...
+end
+
+function sanitize!(ms::Vector{ForceSanitize}; kwargs...)
+    _sanitize!(ms; kwargs...)
+    return ms
+end
+
+function _sanitize!(ms::Vector{ForceSanitize}; kwargs...)
+    for i = 1:length(ms)
+        zero!(ms[i].loc; kwargs...)
+    end
+    return ms
+end
+
+function _sanitize!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     _sanitize_fields!(m, data, elements)
     _sanitize_iterable!(m, data, elements)
     _sanitize_indexable!(m, data, elements)
     return m
 end
 
-function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     for field in fieldnames(T)
+        @debug("Sanitizing $(T).$(field)")
         _sanitize!(_get_property(m, field), data, elements)
     end
     return m
 end
 
-function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     if _is_iterable(T)
         try
             for object in x
@@ -59,7 +77,7 @@ function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements):
     return m
 end
 
-function _sanitize_indexable!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+function _sanitize_indexable!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     if _has_isassigned(T)
         _sanitize_indexable_with_check_assigned!(m, data, elements)
     else
@@ -68,7 +86,7 @@ function _sanitize_indexable!(m::T, data::Vector{Data}, elements::_DataElements)
     return m
 end
 
-function _sanitize_indexable_with_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements)::T where T
+function _sanitize_indexable_with_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     if _is_indexable(T)
         for i = 1:length(m)
             if isassigned(m, i)
@@ -79,7 +97,7 @@ function _sanitize_indexable_with_check_assigned!(m::T, data::Vector{Data}, elem
     return m
 end
 
-function _sanitize_indexable_without_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements) where T
+function _sanitize_indexable_without_check_assigned!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...) where T
     if _is_indexable(T)
         for i = 1:length(m)
             try
