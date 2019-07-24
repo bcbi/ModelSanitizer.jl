@@ -38,6 +38,9 @@ If your model is stored in `m` and your data are stored in `x1`,
 sanitize!(Model(m), Data(x1), Data(x2), Data(x3), ...)
 ```
 
+This will recursively search inside the model `m` for anything that resembles
+your data and will delete the data that it finds.
+
 If you happen to know exactly where inside a model the data are stored, you
 can explicitly tell ModelSanitizer to delete those data. If your model is
 stored in `m`, and you know that the fields `m.x1`, `m.x2`, `m.x3`, etc. contain
