@@ -39,3 +39,10 @@ ModelSanitizer._elements_indexable_with_check_assigned!(Any[], [1, 2, 3])
 ModelSanitizer._elements_indexable_with_check_assigned!(Any[], Bar(0))
 ModelSanitizer._elements_indexable_without_check_assigned!(Any[], [1, 2, 3])
 ModelSanitizer._elements_indexable_without_check_assigned!(Any[], Bar(0))
+
+ModelSanitizer._is_iterable(Bar) = true
+ModelSanitizer._elements_iterable!(Any[], Bar(0))
+
+ModelSanitizer._has_isassigned(Bar) = true
+ModelSanitizer._is_indexable(Bar) = false
+ModelSanitizer._elements_indexable!(Any[], Bar(0))
