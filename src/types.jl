@@ -13,10 +13,10 @@ struct Data{T}
 end
 
 """
-    A wrapper around an object that should always be purged.
+    A wrapper around a location that should always be purged.
 """
 struct ForceSanitize{T}
-    x::T
+    loc::T
 end
 
 struct _DataElements{T}
