@@ -42,7 +42,6 @@ function _sanitize!(ms::Vector{ForceSanitize}; kwargs...)
 end
 
 function _sanitize!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
-    @debug("Sanitizing $(T)")
     _sanitize_fields!(m, data, elements)
     _sanitize_iterable!(m, data, elements)
     _sanitize_indexable!(m, data, elements)
@@ -51,6 +50,7 @@ end
 
 function _sanitize_fields!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     for field in fieldnames(T)
+        @debug("Sanitizing $(T).$(field)")
         _sanitize!(_get_property(m, field), data, elements)
     end
     return m
