@@ -59,7 +59,7 @@ end
 function _sanitize_iterable!(m::T, data::Vector{Data}, elements::_DataElements; kwargs...)::T where T
     if _is_iterable(T)
         try
-            for object in x
+            for object in m
                 try
                     _sanitize!(object, data, elements)
                 catch ex_inner

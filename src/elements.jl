@@ -6,13 +6,13 @@ function _elements(d::T; kwargs...) where T
     return result
 end
 
-function _elements!(all_elements::Vector{Any}, d::V; kwargs...) where V <: AbstractVector{D} where D <: Data{T} where T
-    # push!(all_elements, d)
-    _elements_fields!(all_elements, d; kwargs...)
-    _elements_iterable!(all_elements, d; kwargs...)
-    _elements_indexable!(all_elements, d; kwargs...)
-    return all_elements
-end
+# function _elements!(all_elements::Vector{Any}, d::V; kwargs...) where V <: AbstractVector{D} where D <: Data{T} where T
+#     # push!(all_elements, d)
+#     _elements_fields!(all_elements, d; kwargs...)
+#     _elements_iterable!(all_elements, d; kwargs...)
+#     _elements_indexable!(all_elements, d; kwargs...)
+#     return all_elements
+# end
 
 function _elements!(all_elements::Vector{Any}, d::D; kwargs...) where D <: Data{T} where T
     # push!(all_elements, d)
