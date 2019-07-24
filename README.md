@@ -29,8 +29,10 @@ src="https://codecov.io/gh/bcbi/ModelSanitizer.jl/branch/master/graph/badge.svg"
 
 ## Usage
 
-ModelSanitizer exports the `sanitize!` function and the `Model` and `Data`
-structs. If your model is stored in `m` and your data are stored in `x1`,
+ModelSanitizer exports the `sanitize!` function and the `Model`, `Data`, and
+`ForceSanitize` structs.
+
+If your model is stored in `m` and your data are stored in `x1`,
 `x2`, `x3`, etc. then you can sanitize your model with:
 ```julia
 sanitize!(Model(m), Data(x1), Data(x2), Data(x3), ...)

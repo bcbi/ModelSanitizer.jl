@@ -36,9 +36,7 @@ end
 
 function _sanitize!(ms::Vector{ForceSanitize}; kwargs...)
     for i = 1:length(ms)
-        if isassigned(ms, i)
-            zero!(ms[i]; kwargs...)
-        end
+        zero!(ms[i].x; kwargs...)
     end
     return ms
 end

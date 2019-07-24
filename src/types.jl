@@ -16,7 +16,7 @@ end
     A wrapper around an object that should always be purged.
 """
 struct ForceSanitize{T}
-    m::T
+    x::T
 end
 
 struct _DataElements{T}

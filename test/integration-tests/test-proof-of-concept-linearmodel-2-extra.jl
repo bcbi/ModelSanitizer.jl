@@ -75,7 +75,6 @@ end
 @test all(m.y .== y[training_rows])
 @test !all(m.y .== 0)
 
-m = DataFrameLinearModel{Float64}()
 sanitize!(Model(m))
 
 @test m.X != X[training_rows, :]
