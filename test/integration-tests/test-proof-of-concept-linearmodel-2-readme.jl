@@ -86,23 +86,23 @@ function r2(m::DataFrameLinearModel{T})::T where T
 end
 
 X = DataFrame()
-X[:x1] = randn(1_000)
-X[:x2] = randn(1_000)
-X[:x3] = randn(1_000)
-X[:x4] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 1_000; replace=true)
-X[:x5] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 1_000; replace=true)
-X[:x6] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 1_000; replace=true)
-X[:x7] = sample(["foo", "bar"], pweights([0.3, 0.7]), 1_000; replace=true)
-X[:x8] = sample(["apple", "banana", "carrot"], pweights([0.1, 0.7, 0.2]), 1_000; replace=true)
-X[:x9] = sample(["red", "green", "yellow", "blue"], pweights([0.2, 0.3, 0.15, 0.35]), 1_000; replace=true)
+X[:x1] = randn(100)
+X[:x2] = randn(100)
+X[:x3] = randn(100)
+X[:x4] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 100; replace=true)
+X[:x5] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 100; replace=true)
+X[:x6] = sample([1,2,3], pweights([0.005, 0.99, 0.005]), 100; replace=true)
+X[:x7] = sample(["foo", "bar"], pweights([0.3, 0.7]), 100; replace=true)
+X[:x8] = sample(["apple", "banana", "carrot"], pweights([0.1, 0.7, 0.2]), 100; replace=true)
+X[:x9] = sample(["red", "green", "yellow", "blue"], pweights([0.2, 0.3, 0.15, 0.35]), 100; replace=true)
 formula = Term(first(names(X))) ~ sum(Term.(names(X)))
 sch = schema(formula, X)
 formula = apply_schema(formula, sch)
 _, Xmatrix = modelcols(formula, X)
 y = Xmatrix * randn(Float64, 12) + randn(1_000)/2
 m = DataFrameLinearModel{Float64}()
-testing_rows = 1:2:1_000
-training_rows = setdiff(1:1_000, testing_rows)
+testing_rows = 1:2:100
+training_rows = setdiff(1:100, testing_rows)
 fit!(m, X[training_rows, :], y[training_rows])
 
 @test m.X == X[training_rows, :]
