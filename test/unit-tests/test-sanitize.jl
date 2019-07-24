@@ -16,11 +16,8 @@ ModelSanitizer._sanitize_indexable_with_check_assigned!(Foo(), ModelSanitizer.Da
 ModelSanitizer._sanitize_indexable_without_check_assigned!([1,2,3], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 ModelSanitizer._sanitize_indexable_without_check_assigned!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 
-ModelSanitizer._is_iterable(Foo) = true
+ModelSanitizer._is_iterable(::Type{<:Foo}) = true
 ModelSanitizer._sanitize_iterable!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
 
-ModelSanitizer._has_isassigned(Foo) = true
+ModelSanitizer._has_isassigned(::Type{<:Foo}) = true
 ModelSanitizer._sanitize_indexable!(Foo(), ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
-
-# ModelSanitizer._sanitize!(::Foo, data, elements) = error("Cannot sanitize a Foo")
-# ModelSanitizer._sanitize_iterable!([1, 2, Foo()], ModelSanitizer.Data[], ModelSanitizer._DataElements(0))
