@@ -6,9 +6,9 @@ elements = ModelSanitizer._elements(data)
 m = LinearModel{Float64}()
 fit!(m, X[training_rows, :], y[training_rows])
 
-predict(m)
-predict(m, X[training_rows, :])
-predict(m, X[testing_rows, :])
+Test.@test predict(m) isa AbstractVector
+Test.@test predict(m, X[training_rows, :]) isa AbstractVector
+Test.@test predict(m, X[testing_rows, :]) isa AbstractVector
 
 Test.@test predict(m) == predict(m, X[training_rows, :])
 Test.@test mse(m) == mse(m, X[training_rows, :], y[training_rows])
@@ -27,9 +27,9 @@ Test.@test !all(m.y .== 0)
 
 sanitize!(Model(m), Data(X), Data(y))
 
-predict(m)
-predict(m, X[training_rows, :])
-predict(m, X[testing_rows, :])
+Test.@test predict(m) isa AbstractVector
+Test.@test predict(m, X[training_rows, :]) isa AbstractVector
+Test.@test predict(m, X[testing_rows, :]) isa AbstractVector
 
 Test.@test predict(m) == predict(m, X[training_rows, :])
 Test.@test mse(m) == mse(m, X[training_rows, :], y[training_rows])
