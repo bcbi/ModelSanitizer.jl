@@ -22,11 +22,11 @@ function _fix_vector_type(original_vector::AbstractVector)
     return new_vector
 end
 
-function _is_iterable(::Type{T})::Bool where T <: Number
+function _is_iterable(::Type{<:Number})::Bool
     return false
 end
 
-function _is_iterable(::Type{T})::Bool where T <: Char
+function _is_iterable(::Type{<:Char})::Bool
     return false
 end
 
@@ -38,11 +38,11 @@ function _has_isassigned(::Type{T})::Bool where T
     return hasmethod(isassigned, (T, Int,))
 end
 
-function _is_indexable(::Type{T})::Bool where T <: Number
+function _is_indexable(::Type{<:Number})::Bool
     return false
 end
 
-function _is_indexable(::Type{T})::Bool where T <: Char
+function _is_indexable(::Type{<:Char})::Bool
     return false
 end
 
