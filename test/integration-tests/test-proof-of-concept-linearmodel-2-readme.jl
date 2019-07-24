@@ -31,8 +31,16 @@ function fit!(m::DataFrameLinearModel{T}, X::DataFrame, y::Vector{T})::DataFrame
 end
 
 function predict(m::DataFrameLinearModel{T}, X::DataFrame)::Vector{T} where T
-    _, Xmatrix = modelcols(m.formula, X)
+    formula = m.formula
+    sch = m.sch
+    formula = apply_schema(formula, sch)
+    _, Xmatrix = modelcols(formula, X)
     y_hat::Vector{T} = Xmatrix * m.beta
+    return y_hat
+end
+
+function predict(m::LinearModel{T})::Vector{T} where T
+    y_hat::Vector{T} = predict(m, m.X)
     return y_hat
 end
 

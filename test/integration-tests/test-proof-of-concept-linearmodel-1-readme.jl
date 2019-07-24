@@ -24,6 +24,12 @@ function predict(m::LinearModel{T}, X::Matrix{T})::Vector{T} where T
     return y_hat
 end
 
+function predict(m::LinearModel{T})::Vector{T} where T
+    X::Matrix{T} = m.X
+    y_hat::Vector{T} = predict(m, X)
+    return y_hat
+end
+
 function mse(y::Vector{T}, y_hat::Vector{T})::T where T
     _mse::T = mean((y .- y_hat).^2)
     return _mse
