@@ -2,10 +2,6 @@
 
 set -ev
 
-echo $TRAVIS_COMMIT_MESSAGE
-
-exit 1
-
 julia -e '
     import Pkg;
     Pkg.build("ModelSanitizer")
