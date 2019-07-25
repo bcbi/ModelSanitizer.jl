@@ -38,7 +38,7 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
 end
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master-benchmark")
-    allow_time_regressions, allow_memory_regressions = _travis_allow_regressions(_get_travis_git_commit_message())
+    allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(_get_travis_bors_git_commit_message())
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
 
     project_root = dirname(dirname(@__FILE__))
