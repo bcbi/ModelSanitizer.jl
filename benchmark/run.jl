@@ -10,8 +10,8 @@ _single_line_travis_bors_allow_regressions(x::AbstractString) = _single_line_tra
 function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, Bool}
     _line::String = strip(line)
     _regex_allow_onlytime_regressions = r"^\d*: \[ALLOW_TIME_REGRESSIONS\]"
-    _regex_allow_onlymemory_regressions = r"\n\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
-    _regex_allow_bothtimeandmemory_regressions = r"\n\d*: \[ALLOW_TIME\+MEMORY_REGRESSIONS\]"
+    _regex_allow_onlymemory_regressions = r"^\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
+    _regex_allow_bothtimeandmemory_regressions = r"^\d*: \[ALLOW_TIME\+MEMORY_REGRESSIONS\]"
     _allow_onlytime_regressions::Bool = occursin(_regex_allow_onlytime_regressions, _line)
     _allow_onlymemory_regressions::Bool = occursin(_regex_allow_onlymemory_regressions, _line)
     _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_bothtimeandmemory_regressions, _line)
