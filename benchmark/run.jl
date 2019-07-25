@@ -20,8 +20,6 @@ function run_benchmarks()
     const target = "HEAD"
     const baseline = "origin/master-benchmark"
 
-
-
     judgement = BenchmarkTools.judge("ModelSanitizer", target, baseline)
 
     judgement_suite = PkgBenchmark.benchmarkgroup(judgement)
