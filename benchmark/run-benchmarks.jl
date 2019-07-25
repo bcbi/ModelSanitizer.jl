@@ -16,6 +16,4 @@ const fail_travis_if_benchmarks_detect_performance_regression = true
 const target = "HEAD"
 const baseline = "origin/master-benchmark"
 
-benchmark_result = PkgBenchmark.benchmarkpkg("ModelSanitizer"; retune=true)
-
-# BenchmarkTools.judge("ModelSanitizer", target, baseline)
+BenchmarkTools.judge("ModelSanitizer", target, baseline)
