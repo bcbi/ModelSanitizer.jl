@@ -5,6 +5,8 @@ function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
     return result
 end
 
+_single_line_travis_bors_allow_regressions(x::AbstractString) = _single_line_travis_bors_allow_regressions(convert(String, x))
+
 function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, Bool}
     _line::String = strip(line)
     _regex_allow_onlytime_regressions = r"^\d*: \[ALLOW_TIME_REGRESSIONS\]"
@@ -17,6 +19,8 @@ function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, B
     allow_memory_regressions::Bool = _allow_onlymemory_regressions || _allow_bothtimeandmemory_regressions
     return allow_time_regressions, allow_memory_regressions
 end
+
+_travis_bors_allow_regressions(x::AbstractString) = _travis_bors_allow_regressions(convert(String, x))
 
 function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     lines::Vector{String} = split(strip(commit_message), "\n")
