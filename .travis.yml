@@ -59,36 +59,42 @@ jobs:
           os: linux
           julia: 1.1
           env:
-              - JULIA_DEBUG="all"
               - COMPILED_MODULES="no"
+              - GROUP="Test"
               - INLINE="no"
+              - JULIA_DEBUG="all"
           script: ./ci/travis/script.sh
         - stage: "Test"
           os: linux
           julia: 1.1
           env:
-              - JULIA_DEBUG="all"
               - COMPILED_MODULES="no"
+              - GROUP="Test"
               - INLINE="yes"
+              - JULIA_DEBUG="all"
           script: ./ci/travis/script.sh
         - stage: "Test"
           os: linux
           julia: 1.1
           env:
-              - JULIA_DEBUG="all"
               - COMPILED_MODULES="yes"
+              - GROUP="Test"
               - INLINE="no"
+              - JULIA_DEBUG="all"
           script: ./ci/travis/script.sh
         - stage: "Test"
           os: linux
           julia: 1.1
           env:
-              - JULIA_DEBUG="all"
               - COMPILED_MODULES="yes"
+              - GROUP="Test"
               - INLINE="yes"
+              - JULIA_DEBUG="all"
           script: ./ci/travis/script.sh
         - stage: "Benchmark"
           os: linux
           julia: 1.1
+          env:
+              - GROUP="Benchmark"
           script: ./ci/travis/benchmark.sh
           # script: true

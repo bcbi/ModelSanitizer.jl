@@ -11,7 +11,7 @@ julia -e '
 julia -e '
     import Pkg;
     Pkg.add(
-        Pkg.PackageSpec[
+        [
             Pkg.PackageSpec(name="BenchmarkTools", version="0.4.2"),
             Pkg.PackageSpec(name="Coverage", version="0.9.2"),
             Pkg.PackageSpec(name="DataFrames", version="0.18.4"),
