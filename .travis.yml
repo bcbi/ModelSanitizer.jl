@@ -1,19 +1,10 @@
 branches:
     only:
-    - master
-    - staging
-    - trying
-    - /^release\/.*$/ # release branches
-    - /^v[0-9]+\.[0-9]+\.[0-9]+$/ # version tags
-
-env:
-    global:
-        - JULIA_DEBUG="all"
-    matrix:
-        - COMPILED_MODULES="no" INLINE="no"
-        - COMPILED_MODULES="no" INLINE="yes"
-        - COMPILED_MODULES="yes" INLINE="no"
-        - COMPILED_MODULES="yes" INLINE="yes"
+        - master
+        - staging
+        - trying
+        - /^release\/.*$/ # release branches
+        - /^v[0-9]+\.[0-9]+\.[0-9]+$/ # version tags
 
 git:
     depth: 99999999
@@ -36,8 +27,66 @@ notifications:
 
 os:
     - linux
-#     - osx
+    # - osx
 
 ############################################################################
 
-script: ./ci/travis/script.sh
+# script: ./ci/travis/script.sh
+
+before_install:
+    - true
+install:
+    - true
+before_script:
+    - true
+script:
+    - true
+after_script:
+    - true
+
+############################################################################
+
+stages:
+    - "Test"
+    - "Benchmark"
+
+############################################################################
+
+jobs:
+    include:
+        - stage: "Test"
+          os: linux
+          julia: 1.1
+          env:
+              - JULIA_DEBUG="all"
+              - COMPILED_MODULES="no"
+              - INLINE="no"
+          script: ./ci/travis/script.sh
+        - stage: "Test"
+          os: linux
+          julia: 1.1
+          env:
+              - JULIA_DEBUG="all"
+              - COMPILED_MODULES="no"
+              - INLINE="yes"
+          script: ./ci/travis/script.sh
+        - stage: "Test"
+          os: linux
+          julia: 1.1
+          env:
+              - JULIA_DEBUG="all"
+              - COMPILED_MODULES="yes"
+              - INLINE="no"
+          script: ./ci/travis/script.sh
+        - stage: "Test"
+          os: linux
+          julia: 1.1
+          env:
+              - JULIA_DEBUG="all"
+              - COMPILED_MODULES="yes"
+              - INLINE="yes"
+          script: ./ci/travis/script.sh
+        - stage: "Benchmark"
+          os: linux
+          julia: 1.1
+          script: ./ci/travis/benchmark.sh
