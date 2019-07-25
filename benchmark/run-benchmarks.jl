@@ -12,8 +12,14 @@ include(proof_of_concept_dataframes)
 include(proof_of_concept_linearmodel)
 include(proof_of_concept_mlj)
 
-
 const target = "HEAD"
 const baseline = "origin/master-benchmark"
 
 judgement = BenchmarkTools.judge("ModelSanitizer", target, baseline)
+judgement_suite = PkgBenchmark.benchmarkgroup(judgement)
+for i in ["integration-tests"]
+    for j in ["proof-of-concept-dataframes", "proof-of-concept-linearmodel", "proof-of-concept-mlj"]
+    end
+end
+
+const fail_travis_if_benchmarks_detect_performance_regression = true
