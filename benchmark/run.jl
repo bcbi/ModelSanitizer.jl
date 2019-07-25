@@ -1,8 +1,26 @@
 import PkgBenchmark
 
+function _get_travis_git_commit_message(a::AbstractDict = ENV)::String
+    result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
+    return result
+end
+
+function _travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
+    _commit_message::String = string("\n\n", commit_message, "\n\n")
+    _regex_allow_onlytime_regressions = r"\n\d*: \[ALLOW_TIME_REGRESSIONS\]"
+    _regex_allow_onlymemory_regressions = r"\n\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
+    _regex_allow_bothtimeandmemory_regressions = r"\n\d*: \[ALLOW_TIME\+MEMORY_REGRESSIONS\]"
+    _allow_onlytime_regressions::Bool = occursin(_regex_allow_time_regressions, commit_message)
+    _allow_onlymemory_regressions::Bool = occursin(_regex_allow_memory_regressions, commit_message)
+    _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_timeandmemory_regressions, commit_message)
+    allow_time_regressions::Bool = _allow_onlytime_regressions || _allow_bothtimeandmemory_regressions
+    allow_memory_regressions::Bool = _allow_onlymemory_regressions || _allow_bothtimeandmemory_regressions
+    return allow_time_regressions, allow_memory_regressions
+end
+
 function run_benchmarks()
-    fail_travis_for_time_regressions = false
-    fail_travis_for_memory_regressions = false
+    allow_time_regressions, allow_memory_regressions = _travis_allow_regressions(_get_travis_git_commit_message())
+    @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
 
     project_root = dirname(dirname(@__FILE__))
 
@@ -24,26 +42,36 @@ function run_benchmarks()
         for j in ["proof-of-concept-dataframes", "proof-of-concept-linearmodel", "proof-of-concept-mlj"]
             trial_judgement = PkgBenchmark.benchmarkgroup(judgement).data[i].data[j]
             if PkgBenchmark.time(trial_judgement) == :regression
-                if fail_travis_for_time_regressions
-                    @error("Fatal time regression detected in $(i)/$(j)", trial_judgement)
-                    this_judgement_was_failed_for_time = true
+                if allow_time_regressions
+                    @error("Time regression (allowed) detected in $(i)/$(j)", trial_judgement)
                 else
-                    @error("Non-fatal time regression detected in $(i)/$(j)", trial_judgement)
+                    this_judgement_was_failed_for_time = true
+                    @error("Time regression detected in $(i)/$(j)", trial_judgement)
                 end
             end
             if PkgBenchmark.memory(trial_judgement) == :regression
-                if fail_travis_for_memory_regressions
-                    @error("Fatal time regression detected in $(i)/$(j)", trial_judgement)
-                    this_judgement_was_failed_for_memory = true
+                if allow_memory_regressions
+                    @error("Memory regression (allowed) detected in $(i)/$(j)", trial_judgement)
                 else
-                    @error("Non-fatal time regression detected in $(i)/$(j)", trial_judgement)
+                    this_judgement_was_failed_for_memory = true
+                    @error("Memory regression regression detected in $(i)/$(j)", trial_judgement)
                 end
             end
         end
     end
 
     if this_judgement_was_failed_for_time || this_judgement_was_failed_for_memory
-        error("FAILURE: One or more fatal performance regressions were detected.")
+        error(
+            string(
+                "FAILURE: One or more fatal performance regressions were detected.\n",
+                "To ignore only time regressions, begin your pull request title with ",
+                "\"[ALLOW_TIME_REGRESSIONS]\".\n",
+                "To ignore only memory regressions, begin your pull request title with ",
+                "\"[ALLOW_MEMORY_REGRESSIONS]\".\n",
+                "To ignore both time and memory regressions, begin your pull request title with ",
+                "\"[ALLOW_TIME+MEMORY_REGRESSIONS]\".\n",
+                )
+            )
     else
         @info("SUCCESS: No fatal performance regressions were detected.")
     end

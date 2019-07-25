@@ -5,6 +5,7 @@
 .*~
 .DS_Store
 /dev/
+benchmark/benchmarkingenvironment/
 benchmark/params.jld
 benchmark/tune.json
 deps/already_showed

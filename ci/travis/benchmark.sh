@@ -2,13 +2,16 @@
 
 set -ev
 
-
 julia -e '
     import Pkg;
     Pkg.build("ModelSanitizer")
     '
 
-julia -e '
+mkdir -p $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment
+touch $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment/Project.toml
+cd $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment
+
+julia --project=. -e '
     import Pkg;
     Pkg.add(
         [
@@ -29,4 +32,4 @@ julia -e '
 
 git status
 
-julia benchmark/run.jl
+julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl
