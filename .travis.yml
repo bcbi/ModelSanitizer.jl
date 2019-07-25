@@ -47,8 +47,9 @@ after_script:
 ############################################################################
 
 stages:
-    - "Test"
     - "Benchmark"
+    - "Test"
+    # - "Benchmark"
 
 ############################################################################
 
@@ -90,3 +91,4 @@ jobs:
           os: linux
           julia: 1.1
           script: ./ci/travis/benchmark.sh
+          # script: true

@@ -10,11 +10,6 @@ julia -e '
 
 julia -e '
     import Pkg;
-    Pkg.develop(Pkg.PackageSpec(path=pwd()))
-    '
-
-julia -e '
-    import Pkg;
     Pkg.add(
         Pkg.PackageSpec[
             Pkg.PackageSpec(name="BenchmarkTools", version="0.4.2"),
