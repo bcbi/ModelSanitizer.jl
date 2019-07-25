@@ -6,13 +6,13 @@ function _get_travis_git_commit_message(a::AbstractDict = ENV)::String
 end
 
 function _travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
-    _commit_message::String = string("\n\n", commit_message, "\n\n")
+    _commit_message::String = string("\n\n\n", commit_message, "\n\n\n")
     _regex_allow_onlytime_regressions = r"\n\d*: \[ALLOW_TIME_REGRESSIONS\]"
     _regex_allow_onlymemory_regressions = r"\n\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
     _regex_allow_bothtimeandmemory_regressions = r"\n\d*: \[ALLOW_TIME\+MEMORY_REGRESSIONS\]"
-    _allow_onlytime_regressions::Bool = occursin(_regex_allow_time_regressions, commit_message)
-    _allow_onlymemory_regressions::Bool = occursin(_regex_allow_memory_regressions, commit_message)
-    _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_timeandmemory_regressions, commit_message)
+    _allow_onlytime_regressions::Bool = occursin(_regex_allow_onlytime_regressions, _commit_message)
+    _allow_onlymemory_regressions::Bool = occursin(_regex_allow_onlymemory_regressions, _commit_message)
+    _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_bothtimeandmemory_regressions, _commit_message)
     allow_time_regressions::Bool = _allow_onlytime_regressions || _allow_bothtimeandmemory_regressions
     allow_memory_regressions::Bool = _allow_onlymemory_regressions || _allow_bothtimeandmemory_regressions
     return allow_time_regressions, allow_memory_regressions
