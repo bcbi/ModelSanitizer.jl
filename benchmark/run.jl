@@ -19,13 +19,9 @@ function run_benchmarks(project_root = dirname(dirname(@__FILE__));
     this_judgement_was_failed_for_memory = true
 
     for i in ["integration-tests"]
-        judgement_suite_data_i = PkgBenchmark.benchmarkgroup(judgement).data[i]
-        judgement_suite_data_i_data = judgement_suite_data_i.data
         for j in ["proof-of-concept-dataframes", "proof-of-concept-linearmodel", "proof-of-concept-mlj"]
-            trial_judgement_i_j = judgement_suite_data_i_data[j]
-            time_judgement = BenchmarkTools.time(trial_judgement_i_j)
-            memory_judgement = BenchmarkTools.memory(trial_judgement_i_j)
-            if time == :regression
+            trial_judgement = PkgBenchmark.benchmarkgroup(judgement).data[i].data[j]
+            if BenchmarkTools.time(trial_judgement) == :regression
                 if fail_for_time_regression
                     @error("Fatal time regression detected in $(i)/$(j)")
                     this_judgement_was_failed_for_time = true
@@ -33,7 +29,7 @@ function run_benchmarks(project_root = dirname(dirname(@__FILE__));
                     @error("Non-fatal time regression detected in $(i)/$(j)")
                 end
             end
-            if memory == :regression
+            if BenchmarkTools.memory(trial_judgement) == :regression
                 if fail_for_memory_regression
                     @error("Fatal time regression detected in $(i)/$(j)")
                     this_judgement_was_failed_for_memory = true
