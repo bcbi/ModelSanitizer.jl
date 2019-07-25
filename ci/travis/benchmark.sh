@@ -28,5 +28,5 @@ julia -e '
     '
 
 julia -e '
-    include("benchmark/travis.jl")
+    include("benchmark/run.jl")
     '

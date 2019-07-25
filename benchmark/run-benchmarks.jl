@@ -12,8 +12,8 @@ include(proof_of_concept_dataframes)
 include(proof_of_concept_linearmodel)
 include(proof_of_concept_mlj)
 
-const fail_travis_if_benchmarks_detect_performance_regression = true
+
 const target = "HEAD"
 const baseline = "origin/master-benchmark"
 
-BenchmarkTools.judge("ModelSanitizer", target, baseline)
+judgement = BenchmarkTools.judge("ModelSanitizer", target, baseline)
