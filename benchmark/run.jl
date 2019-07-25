@@ -29,6 +29,8 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
     for line in lines
         _line = strip(line)
         if isempty(_line)
+        elseif startswith(_line, "Merge #")
+        elseif startswith(_line, "Try #")
         elseif startswith(_line, "Co-authored-by:")
         else
             line_allow_time_regressions, line_allow_memory_regressions = _single_line_travis_bors_allow_regressions(_line)
