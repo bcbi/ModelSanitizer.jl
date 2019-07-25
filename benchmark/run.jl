@@ -10,7 +10,7 @@ function run_benchmarks()
     proof_of_concept_linearmodel = joinpath(project_root, "test", "integration-tests", "test-proof-of-concept-linearmodel.jl")
     proof_of_concept_mlj = joinpath(project_root, "test", "integration-tests", "test-proof-of-concept-mlj.jl")
 
-    # run each of the scripts once to force compilation of all of the functions
+    # run each of the scripts once to force compilation of the functions
     include(proof_of_concept_dataframes)
     include(proof_of_concept_linearmodel)
     include(proof_of_concept_mlj)
