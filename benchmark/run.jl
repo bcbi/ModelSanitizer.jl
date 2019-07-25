@@ -18,7 +18,7 @@ function _travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     return allow_time_regressions, allow_memory_regressions
 end
 
-function run_benchmarks()
+function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master-benchmark")
     allow_time_regressions, allow_memory_regressions = _travis_allow_regressions(_get_travis_git_commit_message())
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
 
@@ -33,7 +33,7 @@ function run_benchmarks()
     include(proof_of_concept_linearmodel)
     include(proof_of_concept_mlj)
 
-    judgement = PkgBenchmark.judge("ModelSanitizer", "HEAD", "origin/master-benchmark")
+    judgement = PkgBenchmark.judge("ModelSanitizer", "HEAD", baseline)
 
     this_judgement_was_failed_for_time = false
     this_judgement_was_failed_for_memory = false
