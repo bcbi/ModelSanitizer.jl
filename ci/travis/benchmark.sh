@@ -35,7 +35,6 @@ julia --project=. -e '
         )
     '
 
-# git fetch --all --prune
 git fetch origin master-benchmark:master-benchmark
 
 julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl
