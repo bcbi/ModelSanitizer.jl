@@ -27,6 +27,6 @@ julia -e '
         )
     '
 
-julia -e '
-    include("benchmark/run.jl")
-    '
+git status
+
+julia benchmark/run.jl
