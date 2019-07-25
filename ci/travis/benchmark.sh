@@ -13,6 +13,11 @@ cd $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment
 
 julia --project=. -e '
     import Pkg;
+    Pkg.develop(Pkg.PackageSpec(path = ENV["TRAVIS_BUILD_DIR"]))
+    '
+
+julia --project=. -e '
+    import Pkg;
     Pkg.add(
         [
             Pkg.PackageSpec(name="BenchmarkTools", version="0.4.2"),
