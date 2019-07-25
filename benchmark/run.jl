@@ -1,20 +1,39 @@
 import PkgBenchmark
 
-function _get_travis_git_commit_message(a::AbstractDict = ENV)::String
+function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
     result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
     return result
 end
 
-function _travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
-    _commit_message::String = string("\n\n\n", commit_message, "\n\n\n")
-    _regex_allow_onlytime_regressions = r"\n\d*: \[ALLOW_TIME_REGRESSIONS\]"
+function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, Bool}
+    _line::String = strip(line)
+    _regex_allow_onlytime_regressions = r"^\d*: \[ALLOW_TIME_REGRESSIONS\]"
     _regex_allow_onlymemory_regressions = r"\n\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
     _regex_allow_bothtimeandmemory_regressions = r"\n\d*: \[ALLOW_TIME\+MEMORY_REGRESSIONS\]"
-    _allow_onlytime_regressions::Bool = occursin(_regex_allow_onlytime_regressions, _commit_message)
-    _allow_onlymemory_regressions::Bool = occursin(_regex_allow_onlymemory_regressions, _commit_message)
-    _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_bothtimeandmemory_regressions, _commit_message)
+    _allow_onlytime_regressions::Bool = occursin(_regex_allow_onlytime_regressions, _line)
+    _allow_onlymemory_regressions::Bool = occursin(_regex_allow_onlymemory_regressions, _line)
+    _allow_bothtimeandmemory_regressions::Bool = occursin(_regex_allow_bothtimeandmemory_regressions, _line)
     allow_time_regressions::Bool = _allow_onlytime_regressions || _allow_bothtimeandmemory_regressions
     allow_memory_regressions::Bool = _allow_onlymemory_regressions || _allow_bothtimeandmemory_regressions
+    return allow_time_regressions, allow_memory_regressions
+end
+
+function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
+    lines::Vector{String} = split(strip(commit_message), "\n")
+    vector_allow_time_regressions::Vector{Bool} = Vector{Bool}(undef, 0)
+    vector_allow_memory_regressions::Vector{Bool} = Vector{Bool}(undef, 0)
+    for line in lines
+        _line = strip(line)
+        if isempty(_line)
+        elseif startswith(_line, "Co-authored-by:")
+        else
+            line_allow_time_regressions, line_allow_memory_regressions = _single_line_travis_bors_allow_regressions(_line)
+            push!(vector_allow_time_regressions, line_allow_time_regressions)
+            push!(vector_allow_memory_regressions, line_allow_memory_regressions)
+        end
+    end
+    allow_time_regressions::Bool = all(vector_allow_time_regressions)
+    allow_memory_regressions::Bool = all(vector_allow_memory_regressions)
     return allow_time_regressions, allow_memory_regressions
 end
 
@@ -65,11 +84,17 @@ function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = 
             string(
                 "FAILURE: One or more fatal performance regressions were detected.\n",
                 "To ignore only time regressions, begin your pull request title with ",
-                "\"[ALLOW_TIME_REGRESSIONS]\".\n",
+                "\"",
+                "[ALLOW_TIME_REGRESSIONS]",
+                "\".\n",
                 "To ignore only memory regressions, begin your pull request title with ",
-                "\"[ALLOW_MEMORY_REGRESSIONS]\".\n",
+                "\"",
+                "[ALLOW_MEMORY_REGRESSIONS]",
+                "\".\n",
                 "To ignore both time and memory regressions, begin your pull request title with ",
-                "\"[ALLOW_TIME+MEMORY_REGRESSIONS]\".\n",
+                "\"",
+                "[ALLOW_TIME+MEMORY_REGRESSIONS]",
+                "\".\n",
                 )
             )
     else
