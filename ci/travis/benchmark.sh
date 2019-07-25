@@ -2,13 +2,21 @@
 
 set -ev
 
-
 julia -e '
     import Pkg;
     Pkg.build("ModelSanitizer")
     '
 
-julia -e '
+mkdir -p $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment
+touch $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment/Project.toml
+cd $TRAVIS_BUILD_DIR/benchmark/benchmarkingenvironment
+
+julia --project=. -e '
+    import Pkg;
+    Pkg.develop(Pkg.PackageSpec(path = ENV["TRAVIS_BUILD_DIR"]))
+    '
+
+julia --project=. -e '
     import Pkg;
     Pkg.add(
         [
@@ -27,6 +35,6 @@ julia -e '
         )
     '
 
-julia -e '
-    include("benchmark/travis.jl")
-    '
+git fetch origin master-benchmark:master-benchmark
+
+julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl

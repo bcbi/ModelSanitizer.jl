@@ -1,5 +1,4 @@
 import BenchmarkTools
-import PkgBenchmark
 
 const project_root = dirname(dirname(@__FILE__))
 
