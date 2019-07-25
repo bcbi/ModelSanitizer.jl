@@ -35,13 +35,7 @@ julia --project=. -e '
         )
     '
 
-git status
-git branch -av
-
-git fetch --all --prune
+# git fetch --all --prune
 git fetch origin master-benchmark:master-benchmark
-
-git status
-git branch -av
 
 julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl
