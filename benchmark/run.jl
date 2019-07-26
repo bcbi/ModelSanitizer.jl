@@ -38,8 +38,16 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
             push!(vector_allow_memory_regressions, line_allow_memory_regressions)
         end
     end
-    allow_time_regressions::Bool = all(vector_allow_time_regressions)
-    allow_memory_regressions::Bool = all(vector_allow_memory_regressions)
+    if isempty(vector_allow_time_regressions)
+        allow_time_regressions = false
+    else
+        allow_time_regressions = all(vector_allow_time_regressions)
+    end
+    if isempty(vector_allow_memory_regressions)
+        allow_memory_regressions = false
+    else
+        allow_memory_regressions = all(vector_allow_memory_regressions)
+    end
     return allow_time_regressions, allow_memory_regressions
 end
 
