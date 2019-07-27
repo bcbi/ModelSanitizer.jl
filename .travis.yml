@@ -31,8 +31,6 @@ os:
 
 ############################################################################
 
-# script: ./ci/travis/script.sh
-
 before_install:
     - true
 install:
