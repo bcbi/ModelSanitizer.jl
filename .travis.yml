@@ -1,6 +1,7 @@
 branches:
     only:
         - master
+        - master-benchmark
         - staging
         - trying
         - /^release\/.*$/ # release branches
