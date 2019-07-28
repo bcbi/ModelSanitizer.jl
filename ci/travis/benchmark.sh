@@ -37,4 +37,4 @@ julia --project=. -e '
 
 git fetch origin master:master
 
-# julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl
+julia --project=. $TRAVIS_BUILD_DIR/benchmark/run.jl
