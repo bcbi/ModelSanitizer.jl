@@ -94,5 +94,5 @@ jobs:
           julia: 1.1
           env:
               - GROUP="Benchmark"
-          script: ./ci/travis/benchmark.sh
-          # script: true
+          # script: ./ci/travis/benchmark.sh
+          script: true
