@@ -32,10 +32,8 @@ using Test
             include("integration-tests/test-proof-of-concept-dataframes.jl")
         end
         @testset "integration-tests/test-proof-of-concept-linearmodel" begin
-            @debug("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-readme.jl")
-            @debug("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
-            include("integration-tests/test-proof-of-concept-linearmodel-extra.jl")
+            @debug("integration-tests/test-proof-of-concept-linearmodel.jl")
+            include("integration-tests/test-proof-of-concept-linearmodel.jl")
         end
         if Base.JLOptions().can_inline > 0
             @testset "integration-tests/test-proof-of-concept-mlj.jl" begin
