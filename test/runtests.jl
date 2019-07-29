@@ -1,7 +1,7 @@
 using ModelSanitizer
 using Test
 
-@testset "ModelSanitizer.jl" begin
+function _inner_runtests()::Nothing
     @testset "Unit tests" begin
         @debug("Running unit tests...")
         @testset "unit-tests/test-dataframes.jl" begin
@@ -42,4 +42,24 @@ using Test
             end
         end
     end
+    return nothing
+end
+
+function runtests()::Nothing
+    @sync begin
+        _test_runner = @async begin
+            _inner_runtests()
+        end
+        @async begin
+            while !istaskdone(_test_runner)
+                @info("[[ModelSanitizer tests are still running...]]")
+                sleep(60)
+            end
+        end
+    end
+    return nothing
+end
+
+@testset "ModelSanitizer.jl" begin
+    runtests()
 end
