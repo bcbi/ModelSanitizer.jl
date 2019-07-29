@@ -52,8 +52,8 @@ function runtests()::Nothing
         end
         @async begin
             while !istaskdone(_test_runner)
-                @info("[[ModelSanitizer tests are still running...]]")
                 sleep(60)
+                @debug("[[ModelSanitizer tests are still running...]]")
             end
         end
     end
