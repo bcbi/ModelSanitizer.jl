@@ -29,7 +29,7 @@ end
 
 function get_github_pull_request_title_unauthenticated(d::AbstractDict)::String
     travis_pull_request::String = lowercase(strip(get(d, "TRAVIS_PULL_REQUEST", "false")))
-    if length(travis_pull_request) == 0 || travis_pull_request = "false"
+    if length(travis_pull_request) == 0 || travis_pull_request == "false"
         return ""
     else
         result_without_number::String = get_github_pull_request_title_without_number_unauthenticated(d)
