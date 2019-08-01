@@ -1,12 +1,12 @@
 import PkgBenchmark
 
-include("./utils/github/github_api_authenticated.jl")
-include("./utils/github/github_api_authenticated.jl")
+# include("./utils/github/github_api_authenticated.jl")
+include("./utils/github/github_api_unauthenticated.jl")
 
-function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
-    result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
-    return result
-end
+# function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
+#     result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
+#     return result
+# end
 
 _single_line_travis_bors_allow_regressions(x::AbstractString) = _single_line_travis_bors_allow_regressions(convert(String, x))
 
@@ -55,7 +55,8 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
 end
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
-    allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(_get_travis_bors_git_commit_message())
+    allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(get_github_pull_request_title_unauthenticated())
+    # allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(_get_travis_bors_git_commit_message())
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
 
     project_root = dirname(dirname(@__FILE__))
