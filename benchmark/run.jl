@@ -1,13 +1,16 @@
 import PkgBenchmark
 
-function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
-    result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
-    return result
-end
+include("./utils/github/github_api_unauthenticated.jl")
+# include("./utils/github/github_api_authenticated.jl")
 
-_single_line_travis_bors_allow_regressions(x::AbstractString) = _single_line_travis_bors_allow_regressions(convert(String, x))
+# function get_travis_git_commit_message(a::AbstractDict = ENV)::String
+#     result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
+#     return result
+# end
 
-function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, Bool}
+_single_line_travis_allow_regressions(x::AbstractString) = _single_line_travis_allow_regressions(convert(String, x))
+
+function _single_line_travis_allow_regressions(line::String)::Tuple{Bool, Bool}
     _line::String = strip(line)
     _regex_allow_onlytime_regressions = r"^\d*: \[ALLOW_TIME_REGRESSIONS\]"
     _regex_allow_onlymemory_regressions = r"^\d*: \[ALLOW_MEMORY_REGRESSIONS\]"
@@ -20,9 +23,9 @@ function _single_line_travis_bors_allow_regressions(line::String)::Tuple{Bool, B
     return allow_time_regressions, allow_memory_regressions
 end
 
-_travis_bors_allow_regressions(x::AbstractString) = _travis_bors_allow_regressions(convert(String, x))
+travis_allow_regressions(x::AbstractString) = travis_allow_regressions(convert(String, x))
 
-function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
+function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     lines::Vector{String} = split(strip(commit_message), "\n")
     vector_allow_time_regressions::Vector{Bool} = Vector{Bool}(undef, 0)
     vector_allow_memory_regressions::Vector{Bool} = Vector{Bool}(undef, 0)
@@ -33,7 +36,7 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
         elseif startswith(_line, "Try #")
         elseif startswith(_line, "Co-authored-by:")
         else
-            line_allow_time_regressions, line_allow_memory_regressions = _single_line_travis_bors_allow_regressions(_line)
+            line_allow_time_regressions, line_allow_memory_regressions = _single_line_travis_allow_regressions(_line)
             push!(vector_allow_time_regressions, line_allow_time_regressions)
             push!(vector_allow_memory_regressions, line_allow_memory_regressions)
         end
@@ -52,7 +55,10 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
 end
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
-    allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(_get_travis_bors_git_commit_message())
+    allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_unauthenticated())
+    # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_authenticated())
+    # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_travis_git_commit_message())
+
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
 
     project_root = dirname(dirname(@__FILE__))
