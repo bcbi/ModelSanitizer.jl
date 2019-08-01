@@ -54,12 +54,19 @@ function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     return allow_time_regressions, allow_memory_regressions
 end
 
-function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
+function run_benchmarks(
+        ;
+        target::Union{String, PkgBenchmark.BenchmarkConfig} = "HEAD",
+        baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master",
+        )
     # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_unauthenticated())
     allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_authenticated())
     # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_travis_git_commit_message())
 
-    @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
+    @info("Allow time regressions: $(allow_time_regressions)")
+    @info("Allow memory regressions: $(allow_memory_regressions)")
+    @info("Target: $(target)")
+    @info("Baseline: $(baseline)")
 
     project_root = dirname(dirname(@__FILE__))
 
@@ -72,7 +79,7 @@ function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = 
     include(proof_of_concept_linearmodel)
     include(proof_of_concept_mlj)
 
-    judgement = PkgBenchmark.judge("ModelSanitizer", "HEAD", baseline)
+    judgement = PkgBenchmark.judge("ModelSanitizer", target, baseline)
 
     this_judgement_was_failed_for_time = false
     this_judgement_was_failed_for_memory = false
