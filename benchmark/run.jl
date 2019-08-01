@@ -106,15 +106,15 @@ function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = 
                 "To ignore only time regressions, begin your pull request title with ",
                 "\"",
                 "[ALLOW_TIME_REGRESSIONS]",
-                "\".\n",
+                "\" (without the quotation marks).\n",
                 "To ignore only memory regressions, begin your pull request title with ",
                 "\"",
                 "[ALLOW_MEMORY_REGRESSIONS]",
-                "\".\n",
+                "\" (without the quotation marks).\n",
                 "To ignore both time and memory regressions, begin your pull request title with ",
                 "\"",
                 "[ALLOW_TIME+MEMORY_REGRESSIONS]",
-                "\".\n",
+                "\" (without the quotation marks).\n",
                 )
             )
     else
