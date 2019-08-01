@@ -107,23 +107,31 @@ function run_benchmarks(
     end
 
     if this_judgement_was_failed_for_time || this_judgement_was_failed_for_memory
-        error(
-            string(
-                "FAILURE: One or more fatal performance regressions were detected.\n",
-                "To ignore only time regressions, begin your pull request title with ",
-                "\"",
-                "[ALLOW_TIME_REGRESSIONS]",
-                "\".\n",
-                "To ignore only memory regressions, begin your pull request title with ",
-                "\"",
-                "[ALLOW_MEMORY_REGRESSIONS]",
-                "\".\n",
-                "To ignore both time and memory regressions, begin your pull request title with ",
-                "\"",
-                "[ALLOW_TIME+MEMORY_REGRESSIONS]",
-                "\".\n",
-                )
-            )
+        error_message = string("FAILURE: ",
+                               "One or more fatal performance ",
+                               "performance regressions were detected.\n",
+                               "To ignore only time regressions, ",
+                               "begin your pull request title with ",
+                               "\"",
+                               "[ALLOW_TIME_REGRESSIONS]",
+                               "\".\n",
+                               "To ignore only memory regressions, ",
+                               "begin your pull request title with ",
+                               "\"",
+                               "[ALLOW_MEMORY_REGRESSIONS]",
+                               "\".\n",
+                               "To ignore both time and memory regressions, ",
+                               "begin your pull request title with ",
+                               "\"",
+                               "[ALLOW_TIME+MEMORY_REGRESSIONS]",
+                               "\".\n")
+        travis_branch = lowercase(strip(get(ENV, "TRAVIS_BRANCH", "")))
+        travis_pull_request = lowercase(strip(get(ENV, "TRAVIS_PULL_REQUEST", "")))
+        if travis_branch == "trying" && travis_pull_request == "false"
+            @error(error_message)
+        else
+            error(error_message)
+        end
     else
         @info("SUCCESS: No fatal performance regressions were detected.")
     end
