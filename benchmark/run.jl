@@ -1,5 +1,8 @@
 import PkgBenchmark
 
+include("./utils/github/github_api_authenticated.jl")
+include("./utils/github/github_api_authenticated.jl")
+
 function _get_travis_bors_git_commit_message(a::AbstractDict = ENV)::String
     result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
     return result
