@@ -1,7 +1,7 @@
 import PkgBenchmark
 
-include("./utils/github/github_api_unauthenticated.jl")
-# include("./utils/github/github_api_authenticated.jl")
+# include("./utils/github/github_api_unauthenticated.jl")
+include("./utils/github/github_api_authenticated.jl")
 
 # function get_travis_git_commit_message(a::AbstractDict = ENV)::String
 #     result::String = strip(get(a, "TRAVIS_COMMIT_MESSAGE", ""))
@@ -55,8 +55,8 @@ function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
 end
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
-    allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_unauthenticated())
-    # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_authenticated())
+    # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_unauthenticated())
+    allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_authenticated())
     # allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_travis_git_commit_message())
 
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
