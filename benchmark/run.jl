@@ -55,6 +55,7 @@ function _travis_bors_allow_regressions(commit_message::String)::Tuple{Bool, Boo
 end
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
+    @info("get_github_pull_request_title_unauthenticated: ", get_github_pull_request_title_unauthenticated())
     allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(get_github_pull_request_title_unauthenticated())
     # allow_time_regressions, allow_memory_regressions = _travis_bors_allow_regressions(_get_travis_bors_git_commit_message())
     @info("Allow time regressions: $(allow_time_regressions). Allow memory regressions: $(allow_memory_regressions).")
