@@ -23,7 +23,7 @@ function _single_line_travis_allow_regressions(line::String)::Tuple{Bool, Bool}
     return allow_time_regressions, allow_memory_regressions
 end
 
-travis_allow_regressions(x::AbstractString) = _travis_bors_allow_regressions(convert(String, x))
+travis_allow_regressions(x::AbstractString) = travis_allow_regressions(convert(String, x))
 
 function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     lines::Vector{String} = split(strip(commit_message), "\n")
@@ -53,8 +53,6 @@ function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     end
     return allow_time_regressions, allow_memory_regressions
 end
-
-function _travis_single_pull_request_allow_regressions(commit_message::String)
 
 function run_benchmarks(baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master")
     allow_time_regressions, allow_memory_regressions = travis_allow_regressions(get_github_pull_request_title_unauthenticated())
