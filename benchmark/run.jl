@@ -114,7 +114,7 @@ function run_benchmarks(
                                "begin your pull request title with ",
                                "\"",
                                "[ALLOW_TIME_REGRESSIONS]",
-                               "\".\n",
+                               "\" (without the quotation marks).\n",
                                "To ignore only memory regressions, ",
                                "begin your pull request title with ",
                                "\"",
