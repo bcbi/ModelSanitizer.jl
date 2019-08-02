@@ -88,7 +88,8 @@ jobs:
               - INLINE="yes"
               - JULIA_DEBUG="all"
           script: ./ci/travis/script.sh
-        - stage: "Benchmark"
+        - if: branch = staging
+          stage: "Benchmark"
           os: linux
           julia: 1.1
           env:
