@@ -52,24 +52,6 @@ stages:
 
 jobs:
     include:
-        # - stage: "Test"
-        #   os: linux
-        #   julia: 1.1
-        #   env:
-        #       - COMPILED_MODULES="no"
-        #       - GROUP="Test"
-        #       - INLINE="no"
-        #       - JULIA_DEBUG="all"
-        #   script: ./ci/travis/script.sh
-        # - stage: "Test"
-        #   os: linux
-        #   julia: 1.1
-        #   env:
-        #       - COMPILED_MODULES="no"
-        #       - GROUP="Test"
-        #       - INLINE="yes"
-        #       - JULIA_DEBUG="all"
-        #   script: ./ci/travis/script.sh
         - stage: "Test"
           os: linux
           julia: 1.1
