@@ -25,6 +25,8 @@ end
 
 travis_allow_regressions(x::AbstractString) = travis_allow_regressions(convert(String, x))
 
+_all_and_notempty(x) = !isempty(x) && all(x)
+
 function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
     lines::Vector{String} = split(strip(commit_message), "\n")
     vector_allow_time_regressions::Vector{Bool} = Vector{Bool}(undef, 0)
@@ -41,16 +43,8 @@ function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
             push!(vector_allow_memory_regressions, line_allow_memory_regressions)
         end
     end
-    if isempty(vector_allow_time_regressions)
-        allow_time_regressions = false
-    else
-        allow_time_regressions = all(vector_allow_time_regressions)
-    end
-    if isempty(vector_allow_memory_regressions)
-        allow_memory_regressions = false
-    else
-        allow_memory_regressions = all(vector_allow_memory_regressions)
-    end
+    allow_time_regressions = _all_and_notempty(vector_allow_time_regressions)
+    allow_memory_regressions = _all_and_notempty(vector_allow_memory_regressions)
     return allow_time_regressions, allow_memory_regressions
 end
 
