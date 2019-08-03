@@ -233,4 +233,4 @@ Test.@test !all(m.y .== y[training_rows])
 Test.@test all(m.X .== 0)
 Test.@test all(m.y .== 0)
 
-sleep(60)
+sleep(30)
