@@ -8,7 +8,7 @@ branches:
 
 env:
     global:
-        - RUN_BENCHMARK_STAGE="false"
+        - RUN_BENCHMARK_STAGE="true"
 
 git:
     depth: 99999999
