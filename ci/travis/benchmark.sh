@@ -31,8 +31,6 @@ julia --project=. -e '
             Pkg.PackageSpec(name="StatsBase", version="0.31.0"),
             Pkg.PackageSpec(name="StatsModels", version="0.6.2"),
             Pkg.PackageSpec(name="TimerOutputs", version="0.5.0"),
-            Pkg.PackageSpec(name="HTTP", version="0.8.4"),
-            Pkg.PackageSpec(name="JSON", version="0.21.0"),
             ]
         )
     '
