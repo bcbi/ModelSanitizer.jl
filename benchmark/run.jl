@@ -223,7 +223,7 @@ function run_benchmarks(repo_path = pwd())::Nothing
         # baseline = default_baseline
         baseline = latest_version
     end
-    _run_benchmarks(repo_path; target = target, baseline = baseline)
+    _run_benchmarks(; target = target, baseline = baseline)
     return nothing
 end
 
