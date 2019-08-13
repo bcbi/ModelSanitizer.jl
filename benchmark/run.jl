@@ -1,3 +1,4 @@
+import LibGit2
 import PkgBenchmark
 
 # include("./utils/github/_httpjson_github_api_unauthenticated.jl")
@@ -96,11 +97,30 @@ function pkgbenchmark_judge_ignore_errors(pkg_name, target, baseline)
     end
 end
 
-function run_benchmarks(
+function all_versions(repo_path::AbstractString)
+    _repo_path::String = strip(repo_path)
+    _repo = LibGit2.GitRepoExt(_repo_path)
+    _ref_list = LibGit2.ref_list(_repo)
+    _all_versions = Vector{VersionNumber}(undef, 0)
+    for _ref in _ref_list
+        if occursin(r"^refs\/tags\/v(\d*).(\d*).(\d*)$", _ref)
+            _m = match(r"^refs\/tags\/v(\d*).(\d*).(\d*)$", _ref)
+            _v = VersionNumber("$(_m[1]).$(_m[2]).$(_m[3])")
+            push!(_all_versions, _v)
+        end
+    end
+    unique!(_all_versions)
+    sort!(_all_versions)
+    return _all_versions
+end
+
+latest_semver_version(repo_path) = maximum(all_versions(repo_path))
+
+function _run_benchmarks(
         ;
-        target::Union{String, PkgBenchmark.BenchmarkConfig} = "HEAD",
-        baseline::Union{String, PkgBenchmark.BenchmarkConfig} = "master",
-        )
+        target::Union{String, PkgBenchmark.BenchmarkConfig},
+        baseline::Union{String, PkgBenchmark.BenchmarkConfig},
+        )::Nothing
     # git_commit_message::String = _httpjson_get_github_pull_request_title_unauthenticated()
     # git_commit_message::String = _httpjson_get_github_pull_request_title_authenticated()
     git_commit_message::String = get_travis_git_commit_message()
@@ -188,6 +208,23 @@ function run_benchmarks(
             @info("SUCCESS: No fatal performance regressions were detected.")
         end
     end
+    return nothing
+end
+
+function run_benchmarks(repo_path = pwd())::Nothing
+    travis_branch::String = lowercase(strip(get(ENV, "TRAVIS_BRANCH", "")))
+    travis_pull_request::String = lowercase(strip(get(ENV, "TRAVIS_PULL_REQUEST", "")))
+    latest_version::String = string("v", latest_semver_version(repo_path))
+    default_baseline::String = "master"
+    target::String = "HEAD"
+    if travis_branch == "master" && travis_pull_request == "false"
+        baseline = latest_version
+    else
+        # baseline = default_baseline
+        baseline = latest_version
+    end
+    _run_benchmarks(; target = target, baseline = baseline)
+    return nothing
 end
 
 run_benchmarks()
