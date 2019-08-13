@@ -7,7 +7,7 @@ struct AllowedToIgnoreThisError end
 
 _single_line_travis_ignore_errors(x::AbstractString) = _single_line_travis_ignore_errors(convert(String, x))
 
-function _single_line_travis_ignore_errors(line::String)::Tuple{Bool, Bool}
+function _single_line_travis_ignore_errors(line::String)::Bool
     _line::String = strip(line)
     _regex_ignore_errors = r"^\d*: \[IGNORE_ERRORS_BENCHMARK_STAGE\]"
     ignore_errors::Bool = occursin(_regex_ignore_errors, _line)
@@ -16,7 +16,7 @@ end
 
 travis_ignore_errors(x::AbstractString) = travis_ignore_errors(convert(String, x))
 
-function travis_ignore_errors(commit_message::String)::Tuple{Bool, Bool}
+function travis_ignore_errors(commit_message::String)::Bool
     lines::Vector{String} = split(strip(commit_message), "\n")
     vector_ignore_errors::Vector{Bool} = Vector{Bool}(undef, 0)
     for line in lines
