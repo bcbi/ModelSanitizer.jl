@@ -128,11 +128,11 @@ function _run_benchmarks(
     ignore_errors = travis_ignore_errors(git_commit_message)
     allow_time_regressions, allow_memory_regressions = travis_allow_regressions(git_commit_message)
 
+    @info("Ignore errors during the benchmark suite: $(ignore_errors)")
     @info("Allow time regressions: $(allow_time_regressions)")
     @info("Allow memory regressions: $(allow_memory_regressions)")
     @info("Target: $(target)")
     @info("Baseline: $(baseline)")
-    @info("Ignore errors during the benchmark suite: $(ignore_errors)")
 
     project_root = dirname(dirname(@__FILE__))
 
@@ -215,13 +215,11 @@ function run_benchmarks(repo_path = pwd())::Nothing
     travis_branch::String = lowercase(strip(get(ENV, "TRAVIS_BRANCH", "")))
     travis_pull_request::String = lowercase(strip(get(ENV, "TRAVIS_PULL_REQUEST", "")))
     latest_version::String = string("v", latest_semver_version(repo_path))
-    default_baseline::String = "master"
     target::String = "HEAD"
     if travis_branch == "master" && travis_pull_request == "false"
         baseline = latest_version
     else
-        # baseline = default_baseline
-        baseline = latest_version
+        baseline = "master"
     end
     _run_benchmarks(; target = target, baseline = baseline)
     return nothing
