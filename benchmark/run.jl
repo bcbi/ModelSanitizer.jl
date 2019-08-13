@@ -26,7 +26,7 @@ function travis_ignore_errors(commit_message::String)::Tuple{Bool, Bool}
         elseif startswith(_line, "Try #")
         elseif startswith(_line, "Co-authored-by:")
         else
-            line_ignore_errors = _single_line_travis_allow_regressions(_line)
+            line_ignore_errors = _single_line_travis_ignore_errors(_line)
             push!(vector_ignore_errors, line_ignore_errors)
         end
     end
