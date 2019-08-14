@@ -36,9 +36,9 @@ julia --project=. -e '
         )
     '
 
-CURRENT_GIT_BRANCH=$(git symbolic-ref -q HEAD)
-CURRENT_GIT_BRANCH=${CURRENT_GIT_BRANCH##refs/heads/}
-CURRENT_GIT_BRANCH=${CURRENT_GIT_BRANCH:-HEAD}
+CURRENT_GIT_BRANCH="$(git symbolic-ref -q HEAD)"
+CURRENT_GIT_BRANCH="${CURRENT_GIT_BRANCH##refs/heads/}"
+CURRENT_GIT_BRANCH="${CURRENT_GIT_BRANCH:-HEAD}"
 
 echo "$CURRENT_GIT_BRANCH"
 
