@@ -2,13 +2,17 @@ block_labels = [ "DO NOT MERGE" ]
 
 delete_merged_branches = true
 
+pr_status = [
+    "Travis CI - Pull Request",
+]
+
 status = [
     "codecov/patch",
     # "codecov/project",
-    "continuous-integration/travis-ci/push",
+    "Travis CI - Branch",
 ]
 
-timeout_sec = 576000
+timeout_sec = 10800
 
 [committer]
 name = "BCBI Bot"
