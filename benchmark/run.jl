@@ -164,11 +164,11 @@ function _run_benchmarks(
     include(proof_of_concept_mlj)
 
     if ignore_errors
-        results_of_run_on_target = benchmarkpkg_ignore_errors("ModelSanitizer", target)
         results_of_run_on_baseline = benchmarkpkg_ignore_errors("ModelSanitizer", baseline)
+        results_of_run_on_target = benchmarkpkg_ignore_errors("ModelSanitizer", target)
     else
-        results_of_run_on_target = benchmarkpkg_do_not_ignore_errors("ModelSanitizer", target)
         results_of_run_on_baseline = benchmarkpkg_do_not_ignore_errors("ModelSanitizer", baseline)
+        results_of_run_on_target = benchmarkpkg_do_not_ignore_errors("ModelSanitizer", target)
     end
     if ( ignore_errors ) && ( (results_of_run_on_target isa AllowedToIgnoreThisError) || (results_of_run_on_baseline isa AllowedToIgnoreThisError) )
         @error("One or more errors occurred that prevented us from continuing.")
