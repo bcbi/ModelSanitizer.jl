@@ -183,10 +183,18 @@ function _run_benchmarks(
         if ( ignore_errors ) && ( (judgement_minimum isa AllowedToIgnoreThisError) || (judgement_median isa AllowedToIgnoreThisError) )
             @error("One or more errors occurred that prevented us from continuing.")
         else
-            println(stdout, "Judgement of target `$(target)` versus baseline `$(baseline)` with estimator function `f = minimum` (invariant rows are not included):")
+            println(stdout)
+            println(stdout, "<!--- Package: `ModelSanitizer`. Target: `$(target)`. Baseline: `$(baseline)`. Estimator function: `f = minimum`. Invariant rows are not shown. -->")
+            println(stdout, "<!--- BEGIN MARKDOWN -->")
             PkgBenchmark.export_markdown(stdout, judgement_minimum; export_invariants = false)
-            println(stdout, "Judgement of target `$(target)` versus baseline `$(baseline)` with estimator function `f = median` (invariant rows are not included):")
-            PkgBenchmark.export_markdown(stdout, judgement_minimum; export_invariants = false)
+            println(stdout)
+            println(stdout, "<!--- END MARKDOWN -->")
+            println(stdout, "<!--- Package: `ModelSanitizer`. Target: `$(target)`. Baseline: `$(baseline)`. Estimator function: `f = median`. Invariant rows are not shown. -->")
+            println(stdout, "<!--- BEGIN MARKDOWN -->")
+            PkgBenchmark.export_markdown(stdout, judgement_median; export_invariants = false)
+            println(stdout)
+            println(stdout, "<!--- END MARKDOWN -->")
+            println(stdout)
 
             this_judgement_was_failed_for_time = false
             this_judgement_was_failed_for_memory = false
