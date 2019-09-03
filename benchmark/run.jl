@@ -82,13 +82,13 @@ function travis_allow_regressions(commit_message::String)::Tuple{Bool, Bool}
 end
 
 function benchmarkpkg_do_not_ignore_errors(pkg_name, git_identifier)
-    result = PkgBenchmark.benchmarkpkg(pkg_name, git_identifier)
+    result = PkgBenchmark.benchmarkpkg(pkg_name, git_identifier; retune = true)
     return result
 end
 
 function benchmarkpkg_ignore_errors(pkg_name, git_identifier)
     try
-        result = PkgBenchmark.benchmarkpkg(pkg_name, git_identifier)
+        result = PkgBenchmark.benchmarkpkg(pkg_name, git_identifier; retune = true)
         return result
     catch ex
         showerror(stderr, ex)
